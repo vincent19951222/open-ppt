@@ -1,8 +1,8 @@
-# open-kimi-ppt-skill
+# open-ppt
 
 [简体中文](README.md) | [English](README_EN.md)
 
-[![npm version](https://img.shields.io/npm/v/open-kimi-ppt-skill)](https://www.npmjs.com/package/open-kimi-ppt-skill)
+[![npm version](https://img.shields.io/npm/v/open-ppt)](https://www.npmjs.com/package/open-ppt)
 [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
 
 An unofficial presentation skill for AI coding agents, reverse-engineered from Kimi Slides. It lets your agent create, edit, replicate, read, and export PPT/PPTX files. Each run produces two outputs by default: an editable PPTD project, and a PPTX with embedded fonts and fade page transitions. On-slide element animations and [preset themes](theme_EN.md) are supported, and a local in-browser PPTD editor is included for manual export. Works with Codex, Claude Code, Cursor, WorkBuddy, and any agent that supports the SKILL.md format.
@@ -12,36 +12,36 @@ An unofficial presentation skill for AI coding agents, reverse-engineered from K
 
 ## Install
 
-Node.js 18 or later is required. **Install with `npx` — do not clone the repository**: the repo ships many images and is heavy, while `npx` only fetches the packaged skill files. The default location is the shared directory `~/.agents/skills/open-kimi-ppt` (Windows: `%USERPROFILE%\.agents\skills\open-kimi-ppt`), which most agents discover with a single install.
+Node.js 18 or later is required. **Install with `npx` — do not clone the repository**: the repo ships many images and is heavy, while `npx` only fetches the packaged skill files. The default location is the shared directory `~/.agents/skills/open-ppt` (Windows: `%USERPROFILE%\.agents\skills\open-ppt`), which most agents discover with a single install.
 
 ### Option 1: Ask your agent (recommended)
 
-Say "Install the open-kimi-ppt skill for me with npx", or have it run:
+Say "Install the open-ppt skill for me with npx", or have it run:
 
 ```bash
-npx open-kimi-ppt-skill@latest install -y
+npx open-ppt@latest install -y
 ```
 
-**WorkBuddy users**: WorkBuddy can't discover the shared directory. Say "Install the open-kimi-ppt skill for me with npx into WorkBuddy", or have it run:
+**WorkBuddy users**: WorkBuddy can't discover the shared directory. Say "Install the open-ppt skill for me with npx into WorkBuddy", or have it run:
 
 ```bash
 # macOS / Linux
-npx open-kimi-ppt-skill@latest install --target ~/.workbuddy/skills
+npx open-ppt@latest install --target ~/.workbuddy/skills
 # Windows
-npx open-kimi-ppt-skill@latest install --target %USERPROFILE%\.workbuddy\skills
+npx open-ppt@latest install --target %USERPROFILE%\.workbuddy\skills
 ```
 
 ### Option 2: Manual install
 
 ```bash
 # Interactive checklist (space to select, Enter to confirm)
-npx open-kimi-ppt-skill install
+npx open-ppt install
 
 # Non-interactive: shared directory only
-npx open-kimi-ppt-skill install -y
+npx open-ppt install -y
 
 # All detected agent skill directories (missing ones are skipped)
-npx open-kimi-ppt-skill install --all
+npx open-ppt install --all
 ```
 
 Directories detected by `--all` and the interactive checklist: `~/.agents/skills`, `~/.codex/skills`, `~/.claude/skills`, `~/.cursor/skills`, `~/.workbuddy/skills`.
@@ -51,12 +51,12 @@ Directories detected by `--all` and the interactive checklist: `~/.agents/skills
 Start with the shared directory instead of installing once per agent. If a specific agent can't discover the skill there, pass its directory explicitly (`--target` may be repeated; on Windows use `%USERPROFILE%` instead of `~`):
 
 ```bash
-npx open-kimi-ppt-skill@latest install --target ~/.codex/skills --target ~/.claude/skills
+npx open-ppt@latest install --target ~/.codex/skills --target ~/.claude/skills
 ```
 
 ### Update
 
-Run `npx open-kimi-ppt-skill@latest install -y` again to overwrite the local installation; if you originally used `--target` / `--all`, pass the same flags. Updating only replaces the skill files and does not touch PPTD / PPTX projects you already generated.
+Run `npx open-ppt@latest install -y` again to overwrite the local installation; if you originally used `--target` / `--all`, pass the same flags. Updating only replaces the skill files and does not touch PPTD / PPTX projects you already generated.
 
 ## Usage
 
@@ -67,13 +67,13 @@ Once installed, just describe what you need. By default you get both the complet
 For more stable quality, put a style in the prompt (e.g. “dark product-launch look”) or attach a reference PPT template; topic-only prompts without style guidance tend to vary more.
 
 ```text
-Use open-kimi-ppt to create a liquid-glass-style deck about the history of Apple.
+Use open-ppt to create a liquid-glass-style deck about the history of Apple.
 ```
 
 **Example: Xiaomi YU7 (~8 pages, images as backgrounds)**
 
 ```text
-Use open-kimi-ppt to create a Xiaomi YU7 intro PPT, with images as backgrounds from the web, about 8 pages.
+Use open-ppt to create a Xiaomi YU7 intro PPT, with images as backgrounds from the web, about 8 pages.
 ```
 
 [![WorkBuddy generating Xiaomi YU7 PPT](docs/images/example-workbuddy-yu7.png)](docs/images/example-workbuddy-yu7.png)
@@ -81,7 +81,7 @@ Use open-kimi-ppt to create a Xiaomi YU7 intro PPT, with images as backgrounds f
 **Example: iPhone 17 Pro (~8 pages)**
 
 ```text
-Use open-kimi-ppt to create an iPhone 17 Pro intro PPT.
+Use open-ppt to create an iPhone 17 Pro intro PPT.
 ```
 
 [![iPhone 17 Pro](docs/images/example-iphone-17pro.png)](docs/images/example-iphone-17pro.png)
@@ -89,34 +89,34 @@ Use open-kimi-ppt to create an iPhone 17 Pro intro PPT.
 **Example: on-slide element animations (live presentation)**
 
 ```text
-Use open-kimi-ppt to create a Xiaomi YU7 intro PPT, with images as backgrounds from the web, about 8 pages.
+Use open-ppt to create a Xiaomi YU7 intro PPT, with images as backgrounds from the web, about 8 pages.
 Require element entrance animations.
 ```
 
-See the sample deck at [example/xiaomi-yu7-ppt-animation](example/xiaomi-yu7-ppt-animation) (PPTD project + PPTX; open with `npx open-kimi-ppt-skill serve` to preview animations).
+See the sample deck at [example/xiaomi-yu7-ppt-animation](example/xiaomi-yu7-ppt-animation) (PPTD project + PPTX; open with `npx open-ppt serve` to preview animations).
 
 ### Edit online and export manually
 
 Prefer asking your agent to start the local editor, for example:
 
 ```text
-Run npx open-kimi-ppt-skill serve for me.
+Run npx open-ppt serve for me.
 ```
 
 Or run it yourself in a terminal:
 
 ```bash
-npx open-kimi-ppt-skill serve
+npx open-ppt serve
 ```
 
 Then open <http://127.0.0.1:55173/> and choose a complete project folder containing the `.pptd` manifest, `pages/`, and `media/` to view, edit, and export PPTX in the browser. The bundled [example/dji-pocket4](example/dji-pocket4) project — a complete 18-page deck — is ready to open for a quick tour.
 
 ```bash
 # Open the browser after startup
-npx open-kimi-ppt-skill serve --open
+npx open-ppt serve --open
 
 # Use another port
-npx open-kimi-ppt-skill serve --port 56000
+npx open-ppt serve --port 56000
 ```
 
 Writable folder access requires a Chromium-based browser with the File System Access API. Other browsers fall back to read-only folder upload. Press `Ctrl+C` to stop the server.
@@ -144,11 +144,11 @@ macOS and Linux are unaffected.
 - Format conversion: convert existing PPTX files to PPTD for further editing.
 - Secure by design: local editing only reads and writes project directories explicitly authorized by the user.
 
-## Why open-kimi-ppt
+## Why open-ppt
 
-Most PPT skills fall into three buckets: assemble OOXML / pptxgenjs in code, render each slide as a full-bleed image, or ship a swipeable HTML deck. open-kimi-ppt takes a different path: a PPTD intermediate layer plus real editable PPTX output, meant to be easy for agents to write and still editable in PowerPoint.
+Most PPT skills fall into three buckets: assemble OOXML / pptxgenjs in code, render each slide as a full-bleed image, or ship a swipeable HTML deck. open-ppt takes a different path: a PPTD intermediate layer plus real editable PPTX output, meant to be easy for agents to write and still editable in PowerPoint.
 
-| | open-kimi-ppt | Code-built PPTX (e.g. pptxgenjs) | Full-slide image PPT | Web HTML PPT |
+| | open-ppt | Code-built PPTX (e.g. pptxgenjs) | Full-slide image PPT | Web HTML PPT |
 | --- | --- | --- | --- | --- |
 | Deliverable | PPTD project + PPTX | Usually PPTX only | Usually PPTX only | Single HTML file |
 | Agent-friendly | Clear per-page YAML | Lots of coordinates/API detail | Depends on image models & prompts | Strong HTML/CSS template constraints |
@@ -204,7 +204,7 @@ You can combine these: lock the look with a preset or template, then add one lin
 
 ## What is PPTD
 
-PPTD is a YAML-based presentation DSL — a simplified abstraction layer over OOXML. It preserves the essentials (theme, page layout, element positions) while dropping complex nesting such as Masters; every page is self-contained — what you see is what you get. See [reference/pptd.md](skills/open-kimi-ppt/reference/pptd.md) for the complete definition.
+PPTD is a YAML-based presentation DSL — a simplified abstraction layer over OOXML. It preserves the essentials (theme, page layout, element positions) while dropping complex nesting such as Masters; every page is self-contained — what you see is what you get. See [reference/pptd.md](skills/open-ppt/reference/pptd.md) for the complete definition.
 
 A complete PPTD project looks like this:
 

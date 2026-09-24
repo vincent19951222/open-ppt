@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Universal direct OOXML PPTX compiler for open-kimi-ppt PPTD presentations."""
+"""Universal direct OOXML PPTX compiler for open-ppt PPTD presentations."""
 
 import argparse
 import html

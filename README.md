@@ -1,8 +1,8 @@
-# open-kimi-ppt-skill
+# open-ppt
 
 [简体中文](README.md) | [English](README_EN.md)
 
-[![npm version](https://img.shields.io/npm/v/open-kimi-ppt-skill)](https://www.npmjs.com/package/open-kimi-ppt-skill)
+[![npm version](https://img.shields.io/npm/v/open-ppt)](https://www.npmjs.com/package/open-ppt)
 [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
 
 逆向 Kimi Slides 实现的非官方演示文稿 Skill，让 AI Coding Agent 可以创建、编辑、复刻、读取并导出 PPT/PPTX。每次生成默认产出两份文件：可继续编辑的 PPTD 项目，以及嵌入字体、带淡入淡出翻页切换的 PPTX。支持页内元素动画和[预设主题](theme.md)，附带本地浏览器编辑器，可随时手动导出 PPTX。支持 Codex、Claude Code、Cursor、WorkBuddy 等任何兼容 SKILL.md 规范的 Agent。
@@ -12,36 +12,36 @@
 
 ## 安装
 
-需要 Node.js 18 或更高版本。**请用 `npx` 安装，不要 clone 仓库**：仓库图片多、体积大，`npx` 只取打包后的 Skill 文件。默认装到共享目录 `~/.agents/skills/open-kimi-ppt`（Windows 为 `%USERPROFILE%\.agents\skills\open-kimi-ppt`），多数 Agent 装一次即可发现。
+需要 Node.js 18 或更高版本。**请用 `npx` 安装，不要 clone 仓库**：仓库图片多、体积大，`npx` 只取打包后的 Skill 文件。默认装到共享目录 `~/.agents/skills/open-ppt`（Windows 为 `%USERPROFILE%\.agents\skills\open-ppt`），多数 Agent 装一次即可发现。
 
 ### 方式一：让 AI 安装（推荐）
 
-对 AI 说「帮我用 npx 安装 open-kimi-ppt skill」，或直接让它执行：
+对 AI 说「帮我用 npx 安装 open-ppt skill」，或直接让它执行：
 
 ```bash
-npx open-kimi-ppt-skill@latest install -y
+npx open-ppt@latest install -y
 ```
 
-**WorkBuddy 用户**：它发现不了共享目录，对 AI 说「帮我用 npx 安装 open-kimi-ppt skill 到 WorkBuddy」，或让它执行：
+**WorkBuddy 用户**：它发现不了共享目录，对 AI 说「帮我用 npx 安装 open-ppt skill 到 WorkBuddy」，或让它执行：
 
 ```bash
 # macOS / Linux
-npx open-kimi-ppt-skill@latest install --target ~/.workbuddy/skills
+npx open-ppt@latest install --target ~/.workbuddy/skills
 # Windows
-npx open-kimi-ppt-skill@latest install --target %USERPROFILE%\.workbuddy\skills
+npx open-ppt@latest install --target %USERPROFILE%\.workbuddy\skills
 ```
 
 ### 方式二：终端手动安装
 
 ```bash
 # 交互多选目录（空格选择、回车确认）
-npx open-kimi-ppt-skill install
+npx open-ppt install
 
 # 非交互：只装共享目录
-npx open-kimi-ppt-skill install -y
+npx open-ppt install -y
 
 # 装到全部已检测到的 Agent 目录（不存在的会跳过）
-npx open-kimi-ppt-skill install --all
+npx open-ppt install --all
 ```
 
 `--all` 与交互多选会检测以下目录：`~/.agents/skills`、`~/.codex/skills`、`~/.claude/skills`、`~/.cursor/skills`、`~/.workbuddy/skills`。
@@ -51,12 +51,12 @@ npx open-kimi-ppt-skill install --all
 先用共享目录，不要默认对每个 Agent 各装一遍；确认某个 Agent 发现不了时，再为它单独指定目录（`--target` 可重复，Windows 下用 `%USERPROFILE%` 代替 `~`）：
 
 ```bash
-npx open-kimi-ppt-skill@latest install --target ~/.codex/skills --target ~/.claude/skills
+npx open-ppt@latest install --target ~/.codex/skills --target ~/.claude/skills
 ```
 
 ### 更新
 
-再执行一次 `npx open-kimi-ppt-skill@latest install -y` 即可覆盖更新；当初用过 `--target` / `--all` 就带上相同参数。更新只替换 Skill 文件，不影响已生成的 PPTD / PPTX 项目。
+再执行一次 `npx open-ppt@latest install -y` 即可覆盖更新；当初用过 `--target` / `--all` 就带上相同参数。更新只替换 Skill 文件，不影响已生成的 PPTD / PPTX 项目。
 
 ## 使用
 
@@ -71,7 +71,7 @@ npx open-kimi-ppt-skill@latest install --target ~/.codex/skills --target ~/.clau
 **示例 1：小米 YU7（约 8 页，图片作背景）**
 
 ```text
-使用 open-kimi-ppt 做一个介绍小米 yu7的 PPT,要求图片做背景,素材从网上找,8 页左右
+使用 open-ppt 做一个介绍小米 yu7的 PPT,要求图片做背景,素材从网上找,8 页左右
 ```
 
 | 在线编辑 PPTD | 导出 PPTX |
@@ -83,7 +83,7 @@ npx open-kimi-ppt-skill@latest install --target ~/.codex/skills --target ~/.clau
 **示例 2：DJI Pocket 4（图片作背景）**
 
 ```text
-使用 open-kimi-ppt 帮我生成DJI Pocket4 的 PPT,要求图片做背景,素材从网上找
+使用 open-ppt 帮我生成DJI Pocket4 的 PPT,要求图片做背景,素材从网上找
 ```
 
 | 在线编辑 PPTD | 导出 PPTX |
@@ -93,7 +93,7 @@ npx open-kimi-ppt-skill@latest install --target ~/.codex/skills --target ~/.clau
 **示例 3：iPhone 17 Pro（约 8 页）**
 
 ```text
-使用 open-kimi-ppt 制作 iPhone 17 Pro 介绍 PPT
+使用 open-ppt 制作 iPhone 17 Pro 介绍 PPT
 ```
 
 [![iPhone 17 Pro](docs/images/example-iphone-17pro.png)](docs/images/example-iphone-17pro.png)
@@ -101,34 +101,34 @@ npx open-kimi-ppt-skill@latest install --target ~/.codex/skills --target ~/.clau
 **示例 4：带页内元素动画（现场演示）**
 
 ```text
-使用 open-kimi-ppt 做一个介绍小米 yu7的 PPT,要求图片做背景,素材从网上找,8 页左右
+使用 open-ppt 做一个介绍小米 yu7的 PPT,要求图片做背景,素材从网上找,8 页左右
 要求带元素入场动画
 ```
 
-成品示例见 [example/xiaomi-yu7-ppt-animation](example/xiaomi-yu7-ppt-animation)（含 PPTD 项目与 PPTX，可用 `npx open-kimi-ppt-skill serve` 打开预览动画）。
+成品示例见 [example/xiaomi-yu7-ppt-animation](example/xiaomi-yu7-ppt-animation)（含 PPTD 项目与 PPTX，可用 `npx open-ppt serve` 打开预览动画）。
 
 ### 在线编辑与手动导出
 
 建议直接让 AI 启动本地编辑器，例如说：
 
 ```text
-帮我执行 npx open-kimi-ppt-skill serve
+帮我执行 npx open-ppt serve
 ```
 
 也可以自己在终端运行：
 
 ```bash
-npx open-kimi-ppt-skill serve
+npx open-ppt serve
 ```
 
 然后打开 <http://127.0.0.1:55173/>，选择包含 `.pptd` 清单、`pages/` 和 `media/` 的完整项目文件夹，即可在浏览器中查看、编辑项目并导出 PPTX。仓库自带的 [example/dji-pocket4](example/dji-pocket4) 是一个完整的 18 页示例项目，可直接打开体验。
 
 ```bash
 # 启动后自动打开浏览器
-npx open-kimi-ppt-skill serve --open
+npx open-ppt serve --open
 
 # 使用其他端口
-npx open-kimi-ppt-skill serve --port 56000
+npx open-ppt serve --port 56000
 ```
 
 可写目录需要使用支持 File System Access API 的 Chromium 系浏览器；其他浏览器会回退为只读文件夹上传。按 `Ctrl+C` 停止服务。
@@ -156,11 +156,11 @@ macOS / Linux 无此行为，不受影响。
 - 格式互转：将现有 PPTX 转换为 PPTD 后继续修改。
 - 安全可控：本地编辑仅在用户明确授权的项目目录内读写文件。
 
-## 为什么选 open-kimi-ppt
+## 为什么选 open-ppt
 
-常见 PPT Skill 大致分三类：用代码库直接拼 OOXML / pptxgenjs、整页生成图片再塞进 PPTX、或输出网页 HTML 翻页。open-kimi-ppt 走的是 PPTD 中间层 + 真实可编辑 PPTX 这条路线，想让 Agent 好写、人好看、PowerPoint 能改。
+常见 PPT Skill 大致分三类：用代码库直接拼 OOXML / pptxgenjs、整页生成图片再塞进 PPTX、或输出网页 HTML 翻页。open-ppt 走的是 PPTD 中间层 + 真实可编辑 PPTX 这条路线，想让 Agent 好写、人好看、PowerPoint 能改。
 
-| | open-kimi-ppt | 代码拼 PPTX（如 pptxgenjs） | 整页图片 PPT | 网页 HTML PPT |
+| | open-ppt | 代码拼 PPTX（如 pptxgenjs） | 整页图片 PPT | 网页 HTML PPT |
 | --- | --- | --- | --- | --- |
 | 交付物 | PPTD 项目 + PPTX | 多为仅 PPTX | 多为仅 PPTX | 单文件 HTML |
 | Agent 友好度 | YAML 逐页描述，结构清晰 | 坐标/API 细节多，易排版翻车 | 依赖出图模型与提示词 | HTML/CSS 模板约束强 |
@@ -216,7 +216,7 @@ macOS / Linux 无此行为，不受影响。
 
 ## 什么是 PPTD
 
-PPTD 是一种基于 YAML 的演示文稿 DSL，是 OOXML 之上的简化抽象层：保留主题、页面布局、元素位置等核心信息，去除了 Master 等复杂嵌套，每页自包含、所见即所得。完整的格式定义见 [reference/pptd.md](skills/open-kimi-ppt/reference/pptd.md)。
+PPTD 是一种基于 YAML 的演示文稿 DSL，是 OOXML 之上的简化抽象层：保留主题、页面布局、元素位置等核心信息，去除了 Master 等复杂嵌套，每页自包含、所见即所得。完整的格式定义见 [reference/pptd.md](skills/open-ppt/reference/pptd.md)。
 
 一个完整的 PPTD 项目目录结构如下：
 

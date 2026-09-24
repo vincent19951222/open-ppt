@@ -8,7 +8,7 @@ import { stdin as input, stdout as output } from "node:process";
 import { fileURLToPath } from "node:url";
 import { startEditorServer } from "../lib/editor-server.js";
 
-const SKILL_NAME = "open-kimi-ppt";
+const SKILL_NAME = "open-ppt";
 const MIN_NODE_MAJOR = 18;
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDirectory = join(packageRoot, "skills", SKILL_NAME);
@@ -36,8 +36,8 @@ function printHelp(command) {
     console.log(`Start the local PPTD editor with direct project preview.
 
 Usage:
-  open-kimi-ppt-skill serve [project-directory] [options]
-  open-kimi-ppt-skill preview <project-directory> [options]
+  open-ppt serve [project-directory] [options]
+  open-ppt preview <project-directory> [options]
 
 Options:
   --project <dir>  Mount and directly preview a PPTD project
@@ -53,7 +53,7 @@ Options:
     console.log(`Compile a PPTD project directly into a native .pptx (local, no browser).
 
 Usage:
-  open-kimi-ppt-skill compile <project-directory-or-.pptd> [options]
+  open-ppt compile <project-directory-or-.pptd> [options]
 
 Options:
   -o, --output <file>  Output .pptx path (default: next to the .pptd manifest)
@@ -68,10 +68,10 @@ Requires python3 with PyYAML (auto-installed with pip --user when missing).
   console.log(`Install ${SKILL_NAME} for your AI coding agent or start its local editor.
 
 Usage:
-  open-kimi-ppt-skill [install] [options]
-  open-kimi-ppt-skill serve [project-directory] [options]
-  open-kimi-ppt-skill preview <project-directory> [options]
-  open-kimi-ppt-skill compile <project-directory-or-.pptd> [options]
+  open-ppt [install] [options]
+  open-ppt serve [project-directory] [options]
+  open-ppt preview <project-directory> [options]
+  open-ppt compile <project-directory-or-.pptd> [options]
 
 Install options:
   --target <directory>  Skills directory (repeatable)
@@ -85,10 +85,10 @@ In an interactive terminal (no --target / --yes / --all), a checklist is shown:
   ↑/↓ move  space select  a all  enter confirm
 
 For agents / CI, prefer:
-  npx open-kimi-ppt-skill@latest install -y
+  npx open-ppt@latest install -y
 
-Re-running install replaces an existing open-kimi-ppt installation.
-Run "open-kimi-ppt-skill serve --help" for server options.
+Re-running install replaces an existing open-ppt installation.
+Run "open-ppt serve --help" for server options.
 `);
 }
 
@@ -249,7 +249,7 @@ async function promptInstallTargets() {
     if (!initial) {
       output.write(`\u001b[${lines}A`);
     }
-    output.write("Install open-kimi-ppt to which skills directories?\n");
+    output.write("Install open-ppt to which skills directories?\n");
     output.write("↑/↓ move · space select · a all · enter confirm · ctrl+c cancel\n");
     for (const [index, choice] of choices.entries()) {
       const pointer = index === cursor ? "❯" : " ";

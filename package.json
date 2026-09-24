@@ -1,16 +1,16 @@
 {
-  "name": "open-kimi-ppt-skill",
+  "name": "open-ppt",
   "version": "1.2.0",
   "description": "Unofficial reverse-engineered Kimi Slides skill for AI coding agents with local PPTD editing and PPTX export.",
   "license": "MIT",
   "author": "binaryify",
-  "homepage": "https://github.com/binaryify/open-kimi-ppt-skill#readme",
+  "homepage": "https://github.com/vincent19951222/open-ppt#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/binaryify/open-kimi-ppt-skill.git"
+    "url": "git+https://github.com/vincent19951222/open-ppt.git"
   },
   "bugs": {
-    "url": "https://github.com/binaryify/open-kimi-ppt-skill/issues"
+    "url": "https://github.com/vincent19951222/open-ppt/issues"
   },
   "keywords": [
     "ppt",
@@ -27,17 +27,17 @@
   ],
   "type": "module",
   "bin": {
-    "open-kimi-ppt-skill": "bin/open-kimi-ppt-skill.js"
+    "open-ppt": "bin/open-ppt.js"
   },
   "files": [
     "bin/",
     "editor/",
     "lib/",
-    "skills/open-kimi-ppt/SKILL.md",
-    "skills/open-kimi-ppt/reference/",
-    "skills/open-kimi-ppt/scripts/export_host.html",
-    "skills/open-kimi-ppt/scripts/export_images.py",
-    "skills/open-kimi-ppt/scripts/export_pptx.py",
+    "skills/open-ppt/SKILL.md",
+    "skills/open-ppt/reference/",
+    "skills/open-ppt/scripts/export_host.html",
+    "skills/open-ppt/scripts/export_images.py",
+    "skills/open-ppt/scripts/export_pptx.py",
     "README.md",
     "README_EN.md",
     "theme.md",

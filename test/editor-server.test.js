@@ -47,7 +47,7 @@ test("supports HEAD requests without a response body", async () => {
 
 test("serves PPTD deck payload via /api/deck", async () => {
   await withServer(async (url) => {
-    const response = await fetch(`${url}/api/deck?path=skills/open-kimi-ppt/tests/fixtures/minimal`);
+    const response = await fetch(`${url}/api/deck?path=skills/open-ppt/tests/fixtures/minimal`);
     assert.equal(response.status, 200);
     assert.match(response.headers.get("content-type"), /^application\/json/);
     const data = await response.json();

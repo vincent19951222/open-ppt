@@ -1,4 +1,4 @@
-# open-kimi-ppt 环境自检清单
+# open-ppt 环境自检清单
 
 分享给同事前的环境确认表。五项硬条件全过，再执行安装；任何一项不过，按「解决办法」处理后再继续。
 
@@ -22,21 +22,21 @@
 ## 三、安装
 
 ```bash
-npx open-kimi-ppt-skill@latest install -y
+npx open-ppt@latest install -y
 ```
 
-默认装到共享目录 `~/.agents/skills/open-kimi-ppt`（Windows 为 `%USERPROFILE%\.agents\skills\open-kimi-ppt`），Kimi Code / Codex / Claude Code / Cursor 装一次即可发现。WorkBuddy 发现不了共享目录，需要单独指定：
+默认装到共享目录 `~/.agents/skills/open-ppt`（Windows 为 `%USERPROFILE%\.agents\skills\open-ppt`），Kimi Code / Codex / Claude Code / Cursor 装一次即可发现。WorkBuddy 发现不了共享目录，需要单独指定：
 
 ```bash
 # Windows
-npx open-kimi-ppt-skill@latest install --target %USERPROFILE%\.workbuddy\skills
+npx open-ppt@latest install --target %USERPROFILE%\.workbuddy\skills
 ```
 
 ## 四、装完后端到端验证
 
-1. 对 Agent 说：`用 open-kimi-ppt 做一个介绍咖啡的 PPT，3 页，深色科技风`
+1. 对 Agent 说：`用 open-ppt 做一个介绍咖啡的 PPT，3 页，深色科技风`
 2. 确认产出：项目目录里有 `.pptd` 清单 + `pages/` + 本地编译出的 `.pptx`（默认路径，无需浏览器和网络）
-3. 可选：跑 `npx open-kimi-ppt-skill preview <项目目录>`，浏览器打开 <http://127.0.0.1:55173/> 能进入编辑器；手动导出也可用 `npx open-kimi-ppt-skill compile <项目目录>`
+3. 可选：跑 `npx open-ppt preview <项目目录>`，浏览器打开 <http://127.0.0.1:55173/> 能进入编辑器；手动导出也可用 `npx open-ppt compile <项目目录>`
 
 ## 五、常见坑（出问题先看这里）
 
