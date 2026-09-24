@@ -17,3 +17,6 @@ _user_meta.json
 # Local build / QA artifacts
 output/
 .qa-images/
+
+# Shareable skill package
+dist/
