@@ -84,7 +84,8 @@ Before generating, first read `reference/pptd.md` to understand the pptd format 
 When generating a PPT, adopt different production approaches for different user [design directions]
 ##### Self-directed design
 1. Read the design guide `reference/slides_categories.md`, and read the scenario document corresponding to the user's query
-2. Produce the presentation based on the above
+2. **When the user has no style preference** (the common case for non-designer users), do not silently pick for them: propose ONE preset that fits the scenario (choose via the scenario document and `reference/design_system/`), state the reason in one sentence, and simultaneously point them to `reference/theme-picker.html` — a browser-openable catalog of all presets with real palette swatches and the exact name to quote — so they can pick by eye and reply with a name. Start producing with the proposed preset right away; if the user later names a different one, switch and regenerate. When the user replies with a theme name or a description like "那种深红色的", map it to the closest preset in `reference/design_system/` and confirm the mapping in one line.
+3. Produce the presentation based on the above
 
 #### Generating content in other formats
 - When the user explicitly asks for an infographic, poster, or a highly visual single-page design, read `reference/general-poster.md` and implement it as a single-page or few-page editable PPTD; when the user only asks for an image, still build it with PPTD first, then output the image via screenshot or rendering. Do not load this reference file for ordinary PPT requests.

@@ -49,6 +49,9 @@ AI 会生成一个项目文件夹，里面有 `.pptd` 清单、`pages/` 页面�
 用 open-ppt 做一份《XX产品介绍》PPT，10 页，用 mr-red-tech 医疗科技风
 ```
 
+**不知道用哪个主题？** 双击打开 `open-ppteference	heme-picker.html`（浏览器直接开），
+45 套主题的配色一目了然，点「复制」拿到名字，告诉 AI「用 xx 风格」即可。
+
 ## 四、常见问题
 
 | 现象 | 解决 |
