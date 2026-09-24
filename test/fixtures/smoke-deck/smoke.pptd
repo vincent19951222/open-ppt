@@ -1,0 +1,10 @@
+version: v2
+title: smoke
+size: [960, 540]
+theme:
+  colors:
+    primary: "#C8102E"
+    ink: "#1A1A1A"
+pages:
+  - pages/01_text.page
+  - pages/02_chart_anim.page

@@ -44,3 +44,16 @@ test("supports HEAD requests without a response body", async () => {
     assert.equal(await response.text(), "");
   });
 });
+
+test("serves PPTD deck payload via /api/deck", async () => {
+  await withServer(async (url) => {
+    const response = await fetch(`${url}/api/deck?path=skills/open-kimi-ppt/tests/fixtures/minimal`);
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get("content-type"), /^application\/json/);
+    const data = await response.json();
+    assert.equal(data.id, "minimal");
+    assert.equal(data.title, "Open Kimi PPT Local Export Test");
+    assert.equal(data.pages.length, 1);
+    assert.match(data.pages[0].content, /本地导出验证/);
+  });
+});

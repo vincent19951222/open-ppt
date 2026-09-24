@@ -3,7 +3,7 @@
 import { cpSync, existsSync, mkdtempSync, mkdirSync, readFileSync, renameSync, rmSync } from "node:fs";
 import { homedir } from "node:os";
 import { basename, dirname, join, resolve, sep } from "node:path";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { stdin as input, stdout as output } from "node:process";
 import { fileURLToPath } from "node:url";
 import { startEditorServer } from "../lib/editor-server.js";
@@ -32,17 +32,35 @@ function assertNodeVersion() {
 }
 
 function printHelp(command) {
-  if (command === "serve") {
-    console.log(`Start the local PPTD editor and exporter.
+  if (command === "serve" || command === "preview") {
+    console.log(`Start the local PPTD editor with direct project preview.
 
 Usage:
-  open-kimi-ppt-skill serve [options]
+  open-kimi-ppt-skill serve [project-directory] [options]
+  open-kimi-ppt-skill preview <project-directory> [options]
 
 Options:
+  --project <dir>  Mount and directly preview a PPTD project
   --port <number>  HTTP port (default: 55173)
-  --open           Open the editor in the default browser
+  --open           Open in the default browser (default: true when project specified)
   -h, --help       Show this help
   -V, --version    Show version
+`);
+    return;
+  }
+
+  if (command === "compile") {
+    console.log(`Compile a PPTD project directly into a native .pptx (local, no browser).
+
+Usage:
+  open-kimi-ppt-skill compile <project-directory-or-.pptd> [options]
+
+Options:
+  -o, --output <file>  Output .pptx path (default: next to the .pptd manifest)
+  -h, --help           Show this help
+  -V, --version        Show version
+
+Requires python3 with PyYAML (auto-installed with pip --user when missing).
 `);
     return;
   }
@@ -51,7 +69,9 @@ Options:
 
 Usage:
   open-kimi-ppt-skill [install] [options]
-  open-kimi-ppt-skill serve [options]
+  open-kimi-ppt-skill serve [project-directory] [options]
+  open-kimi-ppt-skill preview <project-directory> [options]
+  open-kimi-ppt-skill compile <project-directory-or-.pptd> [options]
 
 Install options:
   --target <directory>  Skills directory (repeatable)
@@ -78,10 +98,13 @@ function printVersion() {
 
 function parseArguments(arguments_) {
   const args = [...arguments_];
-  const command = args[0] === "install" || args[0] === "serve" ? args.shift() : "install";
-  const options = command === "serve"
-    ? { command, open: false, port: 55173 }
-    : { command, targets: [], yes: false, all: false };
+  const command = args[0] === "install" || args[0] === "serve" || args[0] === "preview" || args[0] === "compile" ? args.shift() : "install";
+  const isServerCommand = command === "serve" || command === "preview";
+  const options = isServerCommand
+    ? { command, open: command === "preview", port: 55173, project: null }
+    : command === "compile"
+      ? { command, input: null, output: null }
+      : { command, targets: [], yes: false, all: false };
 
   while (args.length > 0) {
     const argument = args.shift();
@@ -110,7 +133,31 @@ function parseArguments(arguments_) {
       continue;
     }
 
-    if (command === "serve" && argument === "--port") {
+    if (command === "compile" && (argument === "-o" || argument === "--output")) {
+      const target = args.shift();
+      if (!target || target.startsWith("-")) {
+        throw new Error("--output requires a file path");
+      }
+      options.output = target;
+      continue;
+    }
+
+    if (command === "compile" && !argument.startsWith("-") && !options.input) {
+      options.input = argument;
+      continue;
+    }
+
+    if (isServerCommand && (argument === "--project" || argument === "-p")) {
+      const project = args.shift();
+      if (!project || project.startsWith("-")) {
+        throw new Error("--project requires a directory");
+      }
+      options.project = project;
+      options.open = true;
+      continue;
+    }
+
+    if (isServerCommand && argument === "--port") {
       const port = Number(args.shift());
       if (!Number.isInteger(port) || port < 1 || port > 65_535) {
         throw new Error("--port must be an integer between 1 and 65535");
@@ -119,7 +166,13 @@ function parseArguments(arguments_) {
       continue;
     }
 
-    if (command === "serve" && argument === "--open") {
+    if (isServerCommand && argument === "--open") {
+      options.open = true;
+      continue;
+    }
+
+    if (isServerCommand && !argument.startsWith("-") && !options.project) {
+      options.project = argument;
       options.open = true;
       continue;
     }
@@ -330,7 +383,16 @@ function installSkillTo(skillsDirectory) {
     });
 
     rmSync(destination, { recursive: true, force: true });
-    renameSync(stagedSkill, destination);
+    try {
+      renameSync(stagedSkill, destination);
+    } catch (error) {
+      if (error.code === "EPERM" || error.code === "EACCES") {
+        // Windows file locks may briefly linger after rmSync
+        cpSync(stagedSkill, destination, { recursive: true });
+      } else {
+        throw error;
+      }
+    }
   } finally {
     rmSync(stagingRoot, { recursive: true, force: true });
   }
@@ -347,6 +409,48 @@ async function installSkill(options) {
   for (const target of targets) {
     installSkillTo(target);
   }
+}
+
+function pythonCandidates() {
+  return process.platform === "win32" ? ["python", "python3", "py"] : ["python3", "python"];
+}
+
+function runCompilerWith(pyExec, args) {
+  return spawnSync(pyExec, [join(packageRoot, "lib", "compile-pptx.py"), ...args], {
+    encoding: "utf8",
+  });
+}
+
+function runCompile(options) {
+  if (!options.input) {
+    throw new Error("compile requires a project directory or .pptd manifest path");
+  }
+  const args = [resolve(options.input)];
+  if (options.output) args.push("--output", resolve(options.output));
+
+  let lastError = null;
+  for (const pyExec of pythonCandidates()) {
+    let result = runCompilerWith(pyExec, args);
+    if (result.error && result.error.code === "ENOENT") {
+      lastError = result.error;
+      continue;
+    }
+    if (/ModuleNotFoundError: No module named 'yaml'/i.test(result.stderr || "")) {
+      console.log("PyYAML missing; installing with pip --user …");
+      const install = spawnSync(pyExec, ["-m", "pip", "install", "--user", "pyyaml"], { encoding: "utf8" });
+      if (install.status === 0) {
+        result = runCompilerWith(pyExec, args);
+      } else {
+        console.error(install.stderr || install.stdout);
+        throw new Error(`failed to install PyYAML with ${pyExec} -m pip`);
+      }
+    }
+    if (result.stdout) process.stdout.write(result.stdout);
+    if (result.stderr) process.stderr.write(result.stderr);
+    process.exitCode = result.status ?? 1;
+    return;
+  }
+  throw new Error(`python3 not found; install Python 3 from https://www.python.org (${lastError?.message ?? "no candidate worked"})`);
 }
 
 async function main() {
@@ -366,10 +470,24 @@ async function main() {
     return;
   }
 
+  if (options.command === "compile") {
+    runCompile(options);
+    return;
+  }
+
   const { server, url } = await startEditorServer({ port: options.port });
-  console.log(`Open Kimi PPT editor is running at ${url}`);
+  let targetUrl = url;
+  if (options.project) {
+    const cleanProject = options.project.replace(/\\/g, "/");
+    targetUrl = `${url}?project=${encodeURIComponent(cleanProject)}`;
+    console.log(`\n✓ PPTD 项目直通预览已启动: ${options.project}`);
+    console.log(`  预览与导出地址: ${targetUrl}\n`);
+    console.log(`已在默认浏览器中打开该文稿，可在页面内查看翻页动效，或在右上角点击「导出」下载本地编译的 PPTX。`);
+  } else {
+    console.log(`Open Kimi PPT editor is running at ${url}`);
+  }
   console.log("Press Ctrl+C to stop the server.");
-  if (options.open) openBrowser(url);
+  if (options.open) openBrowser(targetUrl);
 
   const shutdown = () => server.close(() => process.exit(0));
   process.once("SIGINT", shutdown);

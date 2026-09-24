@@ -1,0 +1,22 @@
+pageType: content
+background: {type: solid, color: "#FFFFFF"}
+elements:
+  - elementId: chart-1
+    elementType: chart
+    bounds: [48, 120, 540, 172]
+    data:
+      cols: [year, revenue]
+      rows:
+        - ["2021", 252.7]
+        - ["2022", 303.7]
+    series:
+      - type: bar
+        encode: {x: year, y: revenue}
+        fill: "$primary"
+        dataLabels: {show: true, content: value, numberFormat: "0.0", color: "#FFFFFF"}
+    legend: false
+animations:
+  - elementId: chart-1
+    effect: rise-in
+    trigger: afterPrevious
+    durationMs: 400

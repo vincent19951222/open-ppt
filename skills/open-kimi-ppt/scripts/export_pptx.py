@@ -529,6 +529,205 @@ def wait_for_export_dialog(browser: BrowserSession, timeout: float = 20.0) -> Di
     raise ExportError(f"export dialog did not become ready: {last}")
 
 
+OOPIF_URL_HINT = "kimi.com/neo-ppt"
+
+# The export dialog's format options (PPTX / 图片 / PDF) are plain
+# <div class="radio-group-item"> elements without an ARIA role, so
+# agent-browser's interactive snapshot never exposes them and cross-origin
+# iframe rules block page-level eval. Selecting a format requires CDP.
+FORMAT_CLICK_JS = """
+(() => {
+  const items = [...document.querySelectorAll('.radio-group-item')];
+  const pool = items.length
+    ? items
+    : [...document.querySelectorAll('div,span,label,button')].filter(
+        (el) => el.children.length === 0
+      );
+  const target = pool.find((el) => el.textContent.trim() === %s);
+  if (!target) return null;
+  target.click();
+  return 'clicked';
+})()
+""".strip()
+
+ACTIVE_FORMAT_JS = """
+(() => {
+  const active = document.querySelector('.radio-group-item.active');
+  return active ? active.textContent.trim() : null;
+})()
+""".strip()
+
+
+def ensure_websocket() -> Any:
+    try:
+        import websocket
+
+        return websocket
+    except ImportError:
+        log("websocket-client is required for dialog automation; installing with pip --user")
+        process = run_command(
+            [sys.executable, "-m", "pip", "install", "--user", "websocket-client"],
+            timeout=300,
+        )
+        if process.returncode != 0:
+            raise ExportError(f"failed to install websocket-client:\n{process.stdout[-2000:]}")
+        import websocket
+
+        return websocket
+
+
+def browser_cdp_url(browser: BrowserSession) -> str:
+    process = browser.run(["get", "cdp-url"], timeout=30)
+    match = re.search(r"ws://\S+", process.stdout)
+    if not match:
+        raise ExportError(
+            f"could not determine the browser CDP URL:\n{process.stdout[-500:]}"
+        )
+    return match.group(0)
+
+
+def evaluate_in_iframe(cdp_url: str, url_hint: str, expression: str) -> Any:
+    websocket = ensure_websocket()
+
+    def call(socket: Any, request_id: int, method: str, params: Dict[str, Any]) -> Dict[str, Any]:
+        socket.send(json.dumps({"id": request_id, "method": method, "params": params}))
+        while True:
+            message = json.loads(socket.recv())
+            if message.get("id") != request_id:
+                continue
+            if "error" in message:
+                raise ExportError(f"CDP {method} failed: {message['error']}")
+            return message.get("result", {})
+
+    # websocket-client honors http_proxy env vars; the CDP endpoint is local,
+    # so strip proxy settings instead of tunneling localhost through the proxy.
+    proxy_env = ("http_proxy", "https_proxy", "HTTP_PROXY", "HTTPS_PROXY", "all_proxy", "ALL_PROXY")
+    saved_proxy = {name: os.environ.pop(name) for name in proxy_env if name in os.environ}
+    try:
+        socket = websocket.create_connection(cdp_url, timeout=30, suppress_origin=True)
+    finally:
+        os.environ.update(saved_proxy)
+    try:
+        targets = call(socket, 1, "Target.getTargets", {}).get("targetInfos", [])
+        target = next(
+            (item for item in targets if url_hint in str(item.get("url", ""))), None
+        )
+        if target is None:
+            visible = ", ".join(
+                f"{item.get('type')}:{str(item.get('url', ''))[:80]}" for item in targets
+            )
+            raise ExportError(
+                f"no browser target matches {url_hint!r}; observed: {visible}"
+            )
+        attached = call(
+            socket,
+            2,
+            "Target.attachToTarget",
+            {"targetId": target["targetId"], "flatten": True},
+        )
+        session_id = attached["sessionId"]
+        socket.send(
+            json.dumps(
+                {
+                    "id": 3,
+                    "sessionId": session_id,
+                    "method": "Runtime.evaluate",
+                    "params": {"expression": expression, "returnByValue": True},
+                }
+            )
+        )
+        while True:
+            message = json.loads(socket.recv())
+            if message.get("id") != 3:
+                continue
+            if "error" in message:
+                raise ExportError(f"CDP Runtime.evaluate failed: {message['error']}")
+            result = message.get("result", {})
+            if result.get("exceptionDetails"):
+                details = result["exceptionDetails"]
+                raise ExportError(f"iframe script failed: {details.get('text')}")
+            return result.get("result", {}).get("value")
+    finally:
+        socket.close()
+
+
+DUMP_FORMATS_JS = """
+(() => {
+  const radios = [...document.querySelectorAll('.radio-group-item')]
+    .map((el) => el.textContent.trim());
+  const leaves = [...document.querySelectorAll('div,span,label,button')]
+    .filter((el) => el.children.length === 0)
+    .map((el) => el.textContent.trim())
+    .filter((t) => t.length > 0 && t.length < 40);
+  return JSON.stringify({radios, leaves});
+})()
+""".strip()
+
+
+def select_export_format(
+    browser: BrowserSession, format_names: "str | Sequence[str]"
+) -> None:
+    if isinstance(format_names, str):
+        candidates = [format_names]
+    else:
+        candidates = list(format_names)
+    cdp_url = browser_cdp_url(browser)
+    # The official dialog's label has flipped between "PPTX" and "PPT";
+    # try each candidate until one activates.
+    last_dump: Any = None
+    for format_name in candidates:
+        click_js = FORMAT_CLICK_JS % json.dumps(format_name, ensure_ascii=False)
+        value = evaluate_in_iframe(cdp_url, OOPIF_URL_HINT, click_js)
+        if value != "clicked":
+            continue
+        deadline = time.monotonic() + 10
+        while time.monotonic() < deadline:
+            active = evaluate_in_iframe(cdp_url, OOPIF_URL_HINT, ACTIVE_FORMAT_JS)
+            if active == format_name:
+                return
+            time.sleep(0.3)
+        raise ExportError(f"export format was not activated; active option: {active!r}")
+    last_dump = evaluate_in_iframe(cdp_url, OOPIF_URL_HINT, DUMP_FORMATS_JS)
+    raise ExportError(
+        f"could not find any of the export format options {candidates} "
+        f"in the export dialog; observed options: {last_dump}"
+    )
+
+
+def configure_download_behavior(browser: BrowserSession, target_dir: Path) -> None:
+    try:
+        cdp_url = browser_cdp_url(browser)
+        websocket = ensure_websocket()
+        proxy_env = ("http_proxy", "https_proxy", "HTTP_PROXY", "HTTPS_PROXY", "all_proxy", "ALL_PROXY")
+        saved_proxy = {name: os.environ.pop(name) for name in proxy_env if name in os.environ}
+        try:
+            socket = websocket.create_connection(cdp_url, timeout=10, suppress_origin=True)
+        finally:
+            os.environ.update(saved_proxy)
+        try:
+            socket.send(
+                json.dumps(
+                    {
+                        "id": 101,
+                        "method": "Browser.setDownloadBehavior",
+                        "params": {
+                            "behavior": "allow",
+                            "downloadPath": str(target_dir.resolve()),
+                            "eventsEnabled": True,
+                        },
+                    }
+                )
+            )
+            while True:
+                message = json.loads(socket.recv())
+                if message.get("id") == 101:
+                    break
+        finally:
+            socket.close()
+    except Exception as exc:
+        log(f"warning: could not configure browser download behavior: {exc}")
+
+
 def is_pptx(path: Path) -> bool:
     if not path.is_file() or path.name.endswith(".crdownload"):
         return False
@@ -760,10 +959,17 @@ def export_pptx(
                 ],
                 timeout=120,
             )
-            browser.run(["set", "viewport", "1280", "720"])
+            if cdp_port is None:
+                browser.run(["set", "viewport", "1280", "720"])
             snapshot = browser.snapshot()
             export_ref = ref_by_name(snapshot, "导出", "button")
             browser.run(["click", f"@{export_ref}"])
+            dialog = wait_for_export_dialog(browser)
+
+            # The editor no longer defaults to a selected export format; the
+            # 下载 button stays disabled until PPTX is explicitly activated.
+            # The official label has flipped between "PPTX" and "PPT".
+            select_export_format(browser, ["PPT", "PPTX"])
             dialog = wait_for_export_dialog(browser)
 
             state = switch_state(dialog)
@@ -779,6 +985,7 @@ def export_pptx(
 
             # Plain click (not agent-browser `download`) so Chrome saves to the
             # default Downloads folder; --download-path is broken on some Windows setups.
+            configure_download_behavior(browser, download_dir)
             started_at = time.time() - 1.0
             download_ref = ref_by_name(dialog, "下载", "button")
             log("generating PPTX in the browser")

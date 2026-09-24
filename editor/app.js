@@ -126,6 +126,7 @@ function editorQuery() {
     }),
     sdkSaveMode: "external",
     sdkImageMode: "external",
+    sdkExportMode: "external",
   });
 }
 
@@ -261,6 +262,37 @@ async function openDemo() {
   for (const page of payload.pages) state.memoryFiles.set(page.path, page.content);
   await setDeck(payload, "内置示例 · 修改保存在本页内存");
   setSaveState("示例 · 内存保存", "memory");
+}
+
+async function openProjectFromApi(projectPath) {
+  setLoading(true, "正在载入本地项目", projectPath);
+  const response = await fetch(`/api/deck?path=${encodeURIComponent(projectPath)}`);
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`无法读取项目 (${response.status}): ${errorText}`);
+  }
+  const payload = await response.json();
+  state.source = "api";
+  state.apiProjectPath = payload.projectPath || projectPath;
+  state.directoryHandle = null;
+  state.fileIndex.clear();
+  state.imageCache.clear();
+  state.memoryFiles.clear();
+  state.readOnlyFallback = false;
+
+  if (payload.imageMap) {
+    for (const [key, value] of Object.entries(payload.imageMap)) {
+      state.imageCache.set(key, value);
+    }
+  }
+  state.memoryFiles.set(payload.manifestPath, payload.manifestContent);
+  for (const page of payload.pages) {
+    state.memoryFiles.set(page.path, page.content);
+  }
+
+  await setDeck(payload, `${payload.title} · ${payload.projectPath}`);
+  setSaveState("本地直通 · 自动保存", "saved");
+  addActivity(`已载入「${payload.title}」，共 ${payload.pages.length} 页`, "success");
 }
 
 async function indexDirectory(directoryHandle) {
@@ -485,6 +517,16 @@ function fileToDataUrl(file) {
 
 async function resolveImage(requestedPath) {
   if (/^(?:data:image\/|https?:\/\/|blob:)/i.test(requestedPath)) return requestedPath;
+  if (state.source === "api") {
+    const clean = String(requestedPath || "").replaceAll("\\", "/").replace(/^\.?\//, "");
+    if (state.imageCache.has(clean)) return state.imageCache.get(clean);
+    const fileName = clean.split("/").pop();
+    if (state.imageCache.has(fileName)) return state.imageCache.get(fileName);
+    if (state.imageCache.has(`media/${fileName}`)) return state.imageCache.get(`media/${fileName}`);
+    for (const [key, val] of state.imageCache.entries()) {
+      if (key.endsWith(`/${fileName}`) || key === fileName) return val;
+    }
+  }
   const path = resolveIndexedPath(requestedPath);
   if (!path) return "";
   const entry = state.fileIndex.get(path);
@@ -574,6 +616,34 @@ async function persistChanges(payload = {}) {
     setSaveState("刚刚保存到内存", "memory");
     addActivity(`已在内存保存 ${normalized.length} 项变更`, "success");
     return { fileContent: payload.fileContent, lastModifiedTime: Date.now() };
+  }
+
+  if (state.source === "api") {
+    setSaveState("正在保存…", "saving");
+    try {
+      const response = await fetch("/api/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          projectPath: state.apiProjectPath,
+          changes: normalized,
+        }),
+      });
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`保存到磁盘失败: ${errorText}`);
+      }
+      for (const change of normalized) {
+        if (change.operation === "delete") state.memoryFiles.delete(change.path);
+        else state.memoryFiles.set(change.path, change.content);
+      }
+      setSaveState("已保存到本地", "saved");
+      addActivity(`已自动保存 ${normalized.length} 项变更到本地磁盘`, "success");
+      return { fileContent: payload.fileContent, lastModifiedTime: Date.now() };
+    } catch (error) {
+      setSaveState("保存失败", "error");
+      throw error;
+    }
   }
 
   if (state.readOnlyFallback || !state.directoryHandle) {
@@ -677,6 +747,36 @@ async function connectEditor() {
         hideMessage() {},
         onSave,
         getImages,
+        async handleExport(exportPayload = {}) {
+          addActivity("收到 PPTX 导出请求，正在准备文件...", "info");
+          const project = state.apiProjectPath || state.manifestDirectory || ".";
+          const res = await fetch(`/api/export?path=${encodeURIComponent(project)}&embedFonts=${exportPayload?.embedFonts ? "1" : "0"}`);
+          if (!res.ok) {
+            const err = await res.text();
+            throw new Error(`本地导出服务错误: ${err}`);
+          }
+          const data = await res.json();
+          addActivity(`PPTX 已就绪 (${Math.round((data.sizeBytes || 0) / 1024)} KB)，开始下载`, "success");
+
+          // Directly trigger native browser download in the top-level window
+          try {
+            const link = document.createElement("a");
+            link.href = data.downloadUrl;
+            link.download = data.fileName || "presentation.pptx";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+          } catch (dlErr) {
+            console.warn("Direct anchor download fallback:", dlErr);
+          }
+
+          const absoluteUrl = new URL(data.downloadUrl, window.location.origin).href;
+          return {
+            downloadUrl: absoluteUrl,
+            sizeBytes: data.sizeBytes,
+            pageCount: data.pageCount,
+          };
+        },
         setAnnotationMode() {},
         setAnnotationCurrentPage() {},
         upsertAnnotation() {},
@@ -691,7 +791,20 @@ async function connectEditor() {
     await state.remote.setSlideConfig({ editable: true, locale: "zh-CN", theme: "light" });
     setConnection("ready", "已连接");
     addActivity("编辑器 RPC 握手完成", "success");
-    await openDemo();
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const projectParam = queryParams.get("project") || queryParams.get("deck");
+    if (projectParam) {
+      try {
+        await openProjectFromApi(projectParam);
+        setOpenDialog(false);
+      } catch (error) {
+        handleError(error, "直通项目载入失败，载入默认示例");
+        await openDemo();
+      }
+    } else {
+      await openDemo();
+    }
   } catch (error) {
     setConnection("error", "连接失败");
     setLoading(true, "无法连接编辑器", "请检查网络，或 Kimi 是否更新了公开前端资源。");
@@ -722,7 +835,11 @@ elements.openDialog.addEventListener("click", (event) => {
 elements.openDemo.addEventListener("click", () => openDemo().catch((error) => handleError(error, "示例载入失败")));
 elements.reload.addEventListener("click", () => {
   if (!state.lastDeckPayload) return;
-  const reload = state.source === "directory" ? loadManifest(state.manifestPath, elements.documentPath.textContent) : setDeck(state.lastDeckPayload, elements.documentPath.textContent);
+  const reload = state.source === "api"
+    ? openProjectFromApi(state.apiProjectPath)
+    : state.source === "directory"
+      ? loadManifest(state.manifestPath, elements.documentPath.textContent)
+      : setDeck(state.lastDeckPayload, elements.documentPath.textContent);
   reload.catch((error) => handleError(error, "重新载入失败"));
 });
 elements.toggleActivity.addEventListener("click", () => setActivityPanel(!elements.activityPanel.classList.contains("is-open")));

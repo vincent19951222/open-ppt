@@ -1,0 +1,10 @@
+pageType: content
+background: {type: solid, color: "#FFFFFF"}
+elements:
+  - elementId: title
+    elementType: text
+    bounds: [48, 30, 600, 40]
+    content:
+      align: [left, middle]
+      text: |
+        <p><span style="font-size:24px;color:$primary;font-weight:700">Smoke test</span></p>
