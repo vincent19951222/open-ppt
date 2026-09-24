@@ -1,6 +1,6 @@
 ---
 name: open-ppt
-description: Create, edit, replicate, read, and export presentations. For every PPT task, produce a self-contained PPTD project folder containing the .pptd manifest plus pages/media dependencies, and a locally compiled native .pptx (npx open-ppt compile <dir>) with fade transitions and embedded fonts — no browser or network needed for export. Optionally start direct live preview (npx open-ppt preview <dir>) for in-browser review and inline editing. Use for any presentation, PowerPoint, PPT/PPTX, slide deck, PPTD, infographic, or poster task. Deliver with normal local file/folder links using absolute paths.
+description: Create, edit, replicate, read, and export presentations. For every PPT task, produce a self-contained PPTD project folder containing the .pptd manifest plus pages/media dependencies, and a locally compiled native .pptx via this skill's bundled offline compiler (scripts/compile_pptx.py — needs only python3, no browser or network) with fade transitions and embedded fonts. Optionally start direct live preview (npx open-ppt preview <dir>) for in-browser review and inline editing. Use for any presentation, PowerPoint, PPT/PPTX, slide deck, PPTD, infographic, or poster task. Deliver with normal local file/folder links using absolute paths.
 ---
 
 # Definition
@@ -9,7 +9,7 @@ open-ppt is a presentation creation and export skill built around Moonshot AI's 
 **The default output is a locally compiled native PPTX alongside the editable project.** Unless the user explicitly opts out, produce:
 
 1. the complete editable PPTD project directory (`.pptd` + `pages/` + `media/` and other referenced dependencies);
-2. the matching `.pptx`, compiled directly on disk by the local OOXML compiler (`npx open-ppt compile <dir>`), with fade slide transitions and font embedding (MiSans subset carried by the bundled base template);
+2. the matching `.pptx`, compiled directly on disk by this skill's own OOXML compiler (`scripts/compile_pptx.py`; needs only python3), with fade slide transitions and font embedding (MiSans subset carried by the bundled base template);
 3. optionally, a live preview in the user's browser (`npx open-ppt preview <dir>`) for reviewing animations and editing text in place; its in-page export button runs the same local compiler.
 
 Existing PPTX files may also be converted into PPTD for editing, after which both outputs are delivered again.
@@ -20,12 +20,11 @@ The .pptd format is a simplified abstraction layer over OOXML that follows basic
 ## PPT production workflow
 
 ### step0. Check local prerequisites
-Default delivery is a locally compiled PPTX, which needs Node.js (for the `npx` CLI) and python3; the optional preview canvas, image QA, and opportunistic official export additionally need a Chromium browser plus network access to Kimi's web editor. **Before generating**, verify:
+Default delivery is a locally compiled PPTX produced by this skill's own offline compiler, which needs only python3. The optional `npx` CLI wrapper, preview canvas, image QA, and opportunistic official export additionally need Node.js, a Chromium browser, and network access to Kimi's web editor. **Before generating**, verify:
 
-1. **Node.js 18+**: run `node --version`. If `node` is missing or the major version is below 18, **stop immediately**, tell the user to install Node.js 18+ from https://nodejs.org (or their OS package manager), and do not continue with PPTX export / `npx` until it is available. Only continue with PPTD-only output when the user explicitly opts out of PPTX.
-2. **npm / npx**: run `npm --version`. They ship with Node.js; if missing, treat Node.js as not installed correctly and guide the user to reinstall/fix PATH.
-3. **python3**: run `python3 --version` (on Windows, `python` may be the correct command). Required by the local PPTX compiler and the QA scripts. **PyYAML** is auto-installed with `pip --user` when missing.
-4. **Chrome / Chromium / Edge** and network access to `www.kimi.com` plus `statics.moonshot.cn`: needed only by the optional browser flows — the live preview canvas, visual QA via `export_images.py`, and the opportunistic official export via `export_pptx.py` (which also auto-installs **agent-browser** ≥0.33.2 via npm, and **Pillow** + **websocket-client** for image QA). Local PPTX compilation works fully offline.
+1. **python3**: run `python3 --version` (on Windows, `python` may be the correct command). Required by the local PPTX compiler (`scripts/compile_pptx.py` inside this skill) and the QA scripts. **PyYAML** is auto-installed with `pip --user` when missing. If python3 is unavailable, PPTX export cannot run — stop and tell the user to install Python 3, and only deliver the PPTD project when the user explicitly opts out of PPTX.
+2. **Node.js 18+** (optional, for `npx open-ppt compile/preview` and skill installation): run `node --version`. When missing or below 18, invoke `scripts/compile_pptx.py` with python3 directly — the compiler has no Node dependency — and tell the user to install Node.js 18+ from https://nodejs.org if they want the CLI wrapper or the live preview.
+3. **Chrome / Chromium / Edge** and network access to `www.kimi.com` plus `statics.moonshot.cn`: needed only by the optional browser flows — the live preview canvas, visual QA via `export_images.py`, and the opportunistic official export via `export_pptx.py` (which also auto-installs **agent-browser** ≥0.33.2 via npm, and **Pillow** + **websocket-client** for image QA). Local PPTX compilation works fully offline.
 
 ### step1. Read the context thoroughly
 Read **all files uploaded by the user**, the provided URLs, and the pptd format guide `reference/pptd.md` to fully understand the user's requirements.
@@ -160,14 +159,14 @@ When generating a PPT, adopt different production approaches for different user 
      deck.pptx          # generated by default
    ```
 
-2. Compile the PPTX locally by default, right after PPTD validation passes:
+2. Compile the PPTX locally by default, right after PPTD validation passes. The compiler ships inside this skill directory, so it works on any machine with python3 — no Node.js, browser, network, or login:
 
    ```bash
-   npx open-ppt compile /abs/path/project \
-     -o /abs/path/project/deck.pptx
+   python3 ~/.agents/skills/open-ppt/scripts/compile_pptx.py \
+     /abs/path/project -o /abs/path/project/deck.pptx
    ```
 
-   This runs the local OOXML compiler (`lib/compile-pptx.py` inside the package) — no browser, no network, no login. It writes a fade page transition to every slide and embeds the MiSans font subset carried by the bundled base template. A project directory may be passed instead of the manifest when it contains exactly one `.pptd` file; without `-o` the output lands next to the manifest. After compiling, verify the output exists and report the generated path.
+   Adjust the script path to wherever this skill is actually installed (on Windows: `%USERPROFILE%\.agents\skills\open-ppt\scripts\compile_pptx.py`); the script is `scripts/compile_pptx.py` inside this skill's own folder. A project directory may be passed instead of the manifest when it contains exactly one `.pptd` file; without `-o` the output lands next to the manifest. PyYAML is auto-installed with `pip --user` when missing. After compiling, verify the output exists and report the generated path. When the npm CLI is available, `npx open-ppt compile <dir>` wraps the same compiler.
 3. Optionally start the live preview for the user: `npx open-ppt preview <project-directory>` (or `serve --project <dir>`) mounts the project directly and opens `http://127.0.0.1:55173/?project=<encoded-path>` in the user's default browser. The user can review slide transitions and edit text in place (auto-saved back to disk). The in-page **导出 → 下载** button runs the same local compiler — it is a convenience trigger, not a separate export engine.
 4. Deliver with normal clickable local links using absolute paths. In the final response, link all of the following:
    - the project directory;

@@ -416,7 +416,7 @@ function pythonCandidates() {
 }
 
 function runCompilerWith(pyExec, args) {
-  return spawnSync(pyExec, [join(packageRoot, "lib", "compile-pptx.py"), ...args], {
+  return spawnSync(pyExec, [join(packageRoot, "skills", "open-ppt", "scripts", "compile_pptx.py"), ...args], {
     encoding: "utf8",
   });
 }

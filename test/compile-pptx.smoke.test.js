@@ -7,8 +7,8 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const compiler = join(packageRoot, "lib", "compile-pptx.py");
-const template = join(packageRoot, "lib", "assets", "base-template.pptx");
+const compiler = join(packageRoot, "skills", "open-ppt", "scripts", "compile_pptx.py");
+const template = join(packageRoot, "skills", "open-ppt", "assets", "base-template.pptx");
 const validator = join(packageRoot, "test", "helpers", "validate_pptx.py");
 const fixture = join(packageRoot, "test", "fixtures", "smoke-deck");
 

@@ -5,13 +5,20 @@ import argparse
 import html
 import os
 import re
+import subprocess
 import sys
 import xml.etree.ElementTree as ET
 import zipfile
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-import yaml
+try:
+    import yaml
+except ImportError:
+    print("PyYAML missing; installing with pip --user ...")
+    if subprocess.run([sys.executable, "-m", "pip", "install", "--user", "pyyaml"]).returncode != 0:
+        raise SystemExit("failed to install PyYAML; run: python3 -m pip install --user pyyaml")
+    import yaml
 
 EMU_PER_PX = 12700
 SLIDE_WIDTH = 12192000
@@ -681,8 +688,11 @@ def compile_pptd(pptd_path: Path, output_pptx: Path, template_pptx: Path) -> Non
     print(f"OK: compiled {output_pptx} ({output_pptx.stat().st_size} bytes)")
 
 def find_template(root: Path) -> Path:
+    # script lives at <skill>/scripts/compile_pptx.py; the base template ships
+    # at <skill>/assets/base-template.pptx so an installed skill directory is
+    # self-contained. Repo example decks serve only as a dev fallback.
     candidates = [
-        root / "lib" / "assets" / "base-template.pptx",
+        Path(__file__).resolve().parent.parent / "assets" / "base-template.pptx",
         root / "example" / "dji-pocket4" / "DJI Osmo Pocket 4 产品深度解读.pptx",
         root / "example" / "yu7-ppt" / "yu7.pptx",
         root / "example" / "xiaomi-yu7-ppt-animation" / "xiaomi-yu7.pptx",
@@ -690,7 +700,7 @@ def find_template(root: Path) -> Path:
     for c in candidates:
         if c.is_file():
             return c
-    raise RuntimeError("No base template PPTX found in repository")
+    raise RuntimeError("base-template.pptx not found next to the skill (assets/)")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Compile PPTD to native OOXML PPTX")
