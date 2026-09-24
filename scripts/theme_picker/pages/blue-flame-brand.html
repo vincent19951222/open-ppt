@@ -1,0 +1,174 @@
+<style>
+  .tp-slide { width:960px; height:540px; position:relative; overflow:hidden; background:#06070B;
+              color:#C6CCD3; font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",sans-serif; }
+  .tp-slide * { margin:0; padding:0; box-sizing:border-box; }
+  .tp-mist { position:absolute; left:918px; top:110px; width:220px; height:320px; border-radius:50%;
+             background:#06191D; opacity:.62; }
+  .tp-eyebrow { position:absolute; left:56px; top:24px; font-size:9.5px; letter-spacing:.18em; color:#969DA3; }
+  .tp-doc { position:absolute; right:56px; top:24px; font-size:9.5px; letter-spacing:.14em; color:#6E757B; }
+  .tp-headline { position:absolute; left:56px; top:50px; width:848px; font-size:29px; line-height:1.35;
+                 font-weight:400; color:#F7F8FA; }
+  .tp-headline .sb { font-weight:700; }
+  .tp-headline .hl { color:#1FB9D5; }
+  .tp-basis { position:absolute; left:56px; top:98px; font-size:10px; letter-spacing:.06em; color:#6E757B; }
+  .tp-hr1 { position:absolute; left:56px; top:120px; width:848px; height:1px; background:#1A222C; }
+
+  .tp-kpis { position:absolute; left:56px; top:140px; width:292px; }
+  .tp-kpi { position:absolute; left:0; width:292px; }
+  .tp-kpi .lb { font-size:9.5px; letter-spacing:.14em; color:#969DA3; }
+  .tp-kpi .vrow { display:flex; align-items:baseline; margin-top:3px; }
+  .tp-kpi .val { font-size:28px; font-weight:700; color:#B8ECF9; letter-spacing:-.01em; }
+  .tp-kpi .u { font-size:14px; font-weight:600; margin-left:1px; }
+  .tp-kpi .delta { margin-left:auto; font-size:11.5px; font-weight:700; color:#1FB9D5; }
+  .tp-kpi .bar { margin-top:7px; height:4px; background:#141B23; }
+  .tp-kpi .fill { height:4px; background:#1FB9D5; }
+
+  .tp-concl { position:absolute; left:56px; top:352px; width:292px; }
+  .tp-citem { position:absolute; left:0; width:292px; }
+  .tp-citem .crow { display:flex; align-items:center; }
+  .tp-citem .ix { width:14px; height:14px; border:1px solid #4FA0BB; border-radius:50%; font-size:9px;
+                  color:#B8ECF9; text-align:center; line-height:13px; margin-right:8px; }
+  .tp-citem .h { font-size:11px; font-weight:700; color:#F7F8FA; }
+  .tp-citem .d { margin:3px 0 0 22px; font-size:9px; color:#969DA3; line-height:1.5; }
+
+  .tp-chart { position:absolute; left:396px; top:140px; width:508px; }
+  .tp-chart .caprow { display:flex; align-items:baseline; justify-content:space-between; }
+  .tp-chart .cap { font-size:10px; letter-spacing:.1em; color:#969DA3; }
+  .tp-chart .leg { font-size:9px; color:#969DA3; }
+  .tp-chart .leg .dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:#1FB9D5; margin-right:5px; }
+
+  .tp-timeline { position:absolute; left:396px; top:372px; width:508px; height:64px; }
+  .tp-timeline .tl-line { position:absolute; left:0; top:8px; width:508px; height:1px; background:#527490; }
+  .tp-node { position:absolute; top:0; width:118px; }
+  .tp-node .q { position:absolute; left:0; top:-15px; font-size:10px; font-weight:700; color:#B8ECF9; }
+  .tp-node .dot { position:absolute; left:0; top:2px; width:12px; height:12px; border:1.5px solid #B8ECF9;
+                  border-radius:50%; background:#06070B; }
+  .tp-node .t { position:absolute; left:0; top:22px; font-size:10.5px; font-weight:700; color:#F7F8FA; white-space:nowrap; }
+  .tp-node .d { position:absolute; left:0; top:37px; width:118px; font-size:8.5px; color:#969DA3; line-height:1.45; }
+
+  .tp-hr2 { position:absolute; left:56px; top:480px; width:848px; height:1px; background:#1A222C; }
+  .tp-close { position:absolute; left:56px; top:490px; font-size:10px; letter-spacing:.04em; color:#C6CCD3; }
+  .tp-close .hl { color:#1FB9D5; font-weight:700; }
+  .tp-f-l { position:absolute; left:56px; bottom:12px; font-size:8.5px; letter-spacing:.04em; color:#6E757B; }
+  .tp-f-r { position:absolute; right:56px; bottom:12px; font-size:8.5px; letter-spacing:.04em; color:#6E757B; }
+</style>
+<div class="tp-slide" data-theme="blue-flame-brand">
+  <div class="tp-mist"></div>
+  <div class="tp-eyebrow" data-module="eyebrow">星澜计划 · 2026 年度进展</div>
+  <div class="tp-doc">STELLARIS PROGRAM · ANNUAL REVIEW 2026</div>
+  <div class="tp-headline" data-module="headline"><span>第二年用户规模翻番，</span><span class="sb">单位服务成本下降 <span class="hl">38%</span></span></div>
+  <div class="tp-basis">同比口径 · 单位：万人</div>
+  <div class="tp-hr1"></div>
+
+  <div class="tp-kpis" data-module="kpi">
+    <div class="tp-kpi" style="top:0">
+      <div class="lb">累计用户</div>
+      <div class="vrow"><span class="val">240<span class="u">万</span></span><span class="delta">+112%</span></div>
+      <div class="bar"><div class="fill" style="width:92%"></div></div>
+    </div>
+    <div class="tp-kpi" style="top:70">
+      <div class="lb">月活跃</div>
+      <div class="vrow"><span class="val">86<span class="u">万</span></span><span class="delta">+65%</span></div>
+      <div class="bar"><div class="fill" style="width:64%"></div></div>
+    </div>
+    <div class="tp-kpi" style="top:140">
+      <div class="lb">单位成本</div>
+      <div class="vrow"><span class="val">¥3.1</span><span class="delta">−38%</span></div>
+      <div class="bar"><div class="fill" style="width:42%"></div></div>
+    </div>
+  </div>
+
+  <div class="tp-concl" data-module="conclusions">
+    <div class="tp-citem" style="top:0">
+      <div class="crow"><span class="ix">1</span><span class="h">试点留存验证</span></div>
+      <div class="d">次月留存 61%，超基准 12 个百分点</div>
+    </div>
+    <div class="tp-citem" style="top:42">
+      <div class="crow"><span class="ix">2</span><span class="h">成本拐点</span></div>
+      <div class="d">Q3 起规模效应显现</div>
+    </div>
+    <div class="tp-citem" style="top:84">
+      <div class="crow"><span class="ix">3</span><span class="h">调度收益</span></div>
+      <div class="d">响应时延 −42%</div>
+    </div>
+  </div>
+
+  <div class="tp-chart" data-module="chart">
+    <div class="caprow"><span class="cap">月活趋势（万人）</span><span class="leg"><span class="dot"></span>达标</span></div>
+    <svg width="508" height="190" viewBox="0 0 508 190">
+      <line x1="8" y1="26" x2="500" y2="26" stroke="#1A222C" stroke-width="1"/>
+      <line x1="8" y1="62" x2="500" y2="62" stroke="#1A222C" stroke-width="1"/>
+      <line x1="8" y1="98" x2="500" y2="98" stroke="#1A222C" stroke-width="1"/>
+      <line x1="8" y1="134" x2="500" y2="134" stroke="#1A222C" stroke-width="1"/>
+      <line x1="8" y1="166" x2="500" y2="166" stroke="#536780" stroke-width="1"/>
+      <line x1="128" y1="24" x2="128" y2="166" stroke="#527490" stroke-width="1" stroke-dasharray="3 4"/>
+      <rect x="18" y="123" width="20" height="43" rx="2" fill="#1FB9D5"/>
+      <rect x="58" y="118" width="20" height="48" rx="2" fill="#1FB9D5"/>
+      <rect x="98" y="112" width="20" height="54" rx="2" fill="#1FB9D5"/>
+      <rect x="138" y="105" width="20" height="61" rx="2" fill="#1FB9D5"/>
+      <rect x="178" y="97" width="20" height="69" rx="2" fill="#1FB9D5"/>
+      <rect x="218" y="86" width="20" height="80" rx="2" fill="#1FB9D5"/>
+      <rect x="258" y="77" width="20" height="89" rx="2" fill="#1FB9D5"/>
+      <rect x="298" y="69" width="20" height="97" rx="2" fill="#1FB9D5"/>
+      <rect x="338" y="62" width="20" height="104" rx="2" fill="#1FB9D5"/>
+      <rect x="378" y="52" width="20" height="114" rx="2" fill="#1FB9D5"/>
+      <rect x="418" y="43" width="20" height="123" rx="2" fill="#1FB9D5"/>
+      <rect x="458" y="34" width="20" height="132" rx="2" fill="#1FB9D5"/>
+      <text x="28" y="118" font-size="8" fill="#969DA3" text-anchor="middle">28</text>
+      <text x="68" y="113" font-size="8" fill="#969DA3" text-anchor="middle">31</text>
+      <text x="108" y="107" font-size="8" fill="#969DA3" text-anchor="middle">35</text>
+      <text x="148" y="100" font-size="8" fill="#969DA3" text-anchor="middle">40</text>
+      <text x="188" y="92" font-size="8" fill="#969DA3" text-anchor="middle">45</text>
+      <text x="228" y="81" font-size="8" fill="#969DA3" text-anchor="middle">52</text>
+      <text x="268" y="72" font-size="8" fill="#969DA3" text-anchor="middle">58</text>
+      <text x="308" y="64" font-size="8" fill="#969DA3" text-anchor="middle">63</text>
+      <text x="348" y="57" font-size="8" fill="#969DA3" text-anchor="middle">68</text>
+      <text x="388" y="47" font-size="8" fill="#969DA3" text-anchor="middle">74</text>
+      <text x="428" y="38" font-size="8" fill="#969DA3" text-anchor="middle">80</text>
+      <text x="468" y="27" font-size="11" font-weight="700" fill="#B8ECF9" text-anchor="middle">86</text>
+      <circle cx="28" cy="134" r="6.5" fill="#06070B" stroke="#4FA0BB" stroke-width="1"/>
+      <text x="28" y="137" font-size="8" fill="#B8ECF9" text-anchor="middle">1</text>
+      <circle cx="268" cy="88" r="6.5" fill="#06070B" stroke="#4FA0BB" stroke-width="1"/>
+      <text x="268" y="91" font-size="8" fill="#B8ECF9" text-anchor="middle">2</text>
+      <circle cx="388" cy="63" r="6.5" fill="#06070B" stroke="#4FA0BB" stroke-width="1"/>
+      <text x="388" y="66" font-size="8" fill="#B8ECF9" text-anchor="middle">3</text>
+      <text x="28" y="182" font-size="8" fill="#6E757B" text-anchor="middle">25-10</text>
+      <text x="68" y="182" font-size="8" fill="#6E757B" text-anchor="middle">25-11</text>
+      <text x="108" y="182" font-size="8" fill="#6E757B" text-anchor="middle">25-12</text>
+      <text x="148" y="182" font-size="8" fill="#6E757B" text-anchor="middle">26-01</text>
+      <text x="188" y="182" font-size="8" fill="#6E757B" text-anchor="middle">26-02</text>
+      <text x="228" y="182" font-size="8" fill="#6E757B" text-anchor="middle">26-03</text>
+      <text x="268" y="182" font-size="8" fill="#6E757B" text-anchor="middle">26-04</text>
+      <text x="308" y="182" font-size="8" fill="#6E757B" text-anchor="middle">26-05</text>
+      <text x="348" y="182" font-size="8" fill="#6E757B" text-anchor="middle">26-06</text>
+      <text x="388" y="182" font-size="8" fill="#6E757B" text-anchor="middle">26-07</text>
+      <text x="428" y="182" font-size="8" fill="#6E757B" text-anchor="middle">26-08</text>
+      <text x="468" y="182" font-size="8" fill="#B8ECF9" text-anchor="middle">26-09</text>
+    </svg>
+  </div>
+
+  <div class="tp-timeline" data-module="timeline">
+    <div class="tl-line"></div>
+    <div class="tp-node" style="left:0">
+      <span class="q">Q1</span><span class="dot"></span>
+      <span class="t">低温试点上线</span><span class="d">3 个社区、500 户家庭接入</span>
+    </div>
+    <div class="tp-node" style="left:129px">
+      <span class="q">Q2</span><span class="dot"></span>
+      <span class="t">开放公测</span><span class="d">注册用户首月破 40 万</span>
+    </div>
+    <div class="tp-node" style="left:258px">
+      <span class="q">Q3</span><span class="dot"></span>
+      <span class="t">多城复制</span><span class="d">覆盖 12 城，服务网络成型</span>
+    </div>
+    <div class="tp-node" style="left:387px">
+      <span class="q">Q4</span><span class="dot"></span>
+      <span class="t">智能调度上线</span><span class="d">运力利用率提升至 78%</span>
+    </div>
+  </div>
+
+  <div class="tp-hr2"></div>
+  <div class="tp-close">全年目标超额达成，<span class="hl">增长与降本同步兑现</span></div>
+  <div class="tp-f-l">单位：万人（月活跃） · 内部示例</div>
+  <div class="tp-f-r" data-module="footer">07 · 数据截止 2026-09 · 示例数据</div>
+</div>

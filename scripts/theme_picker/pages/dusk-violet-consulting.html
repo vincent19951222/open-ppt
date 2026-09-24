@@ -1,0 +1,113 @@
+<style>
+  .tp-slide { width:960px; height:540px; position:relative; overflow:hidden; background:#FFFFFF;
+              color:#0F0605; font-family:"Noto Sans SC","Source Han Sans SC","Microsoft YaHei",sans-serif; }
+  .tp-slide * { margin:0; padding:0; box-sizing:border-box; }
+  .tp-slide .tp-eyebrow { position:absolute; left:40px; top:16px; font-size:10.5px; font-weight:500; color:#454545; letter-spacing:.14em; }
+  .tp-slide .tp-eyebrow i { display:inline-block; width:8px; height:8px; background:#FF4D4D; margin-right:8px; }
+  .tp-slide .tp-headline { position:absolute; left:40px; top:34px; width:880px; font-size:23px; font-weight:800; line-height:1.3; }
+  .tp-slide .tp-headline em { font-style:normal; color:#FF4D4D; }
+  .tp-slide .tp-note { position:absolute; left:40px; top:70px; font-size:10.5px; color:#6E6868; }
+
+  .tp-slide .tp-chart { position:absolute; left:40px; top:96px; width:500px; }
+  .tp-slide .tp-chart .ct { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+  .tp-slide .tp-chart .ct b { font-size:12px; font-weight:700; }
+  .tp-slide .tp-chart .ct span { font-size:9px; color:#8F8F8F; }
+  .tp-slide .tp-bars { display:flex; justify-content:space-between; align-items:flex-end; height:168px; padding:0 6px; border-bottom:1px solid #BDBDBD; }
+  .tp-slide .tp-bars .bw { width:36px; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; }
+  .tp-slide .tp-bars .bv { font-size:9px; color:#8F8F8F; margin-bottom:2px; }
+  .tp-slide .tp-bars .bv.hot { font-size:11.5px; font-weight:800; color:#FF4D4D; margin-bottom:3px; }
+  .tp-slide .tp-bars .bar { width:24px; background:#D9D6D6; }
+  .tp-slide .tp-bars .bar.hot { background:#FF4D4D; }
+  .tp-slide .tp-mons { display:flex; justify-content:space-between; padding:0 6px; margin-top:4px; }
+  .tp-slide .tp-mons i { width:36px; font-style:normal; font-size:8px; color:#8F8F8F; text-align:center; }
+
+  .tp-slide .tp-rm { position:absolute; left:40px; top:312px; width:500px; }
+  .tp-slide .tp-rm .cap { font-size:10.5px; font-weight:700; margin-bottom:9px; }
+  .tp-slide .tp-rm .row { display:flex; gap:14px; }
+  .tp-slide .tp-rm .card { position:relative; flex:1; height:88px; background:#F6F6F6; border-radius:2px; padding:8px 9px; }
+  .tp-slide .tp-rm .card + .card::before { content:"→"; position:absolute; left:-13px; top:34px; font-size:10px; color:#BDBDBD; }
+  .tp-slide .tp-rm .q { font-size:13px; font-weight:800; color:#BDBDBD; }
+  .tp-slide .tp-rm .t { font-size:10px; font-weight:700; margin-top:2px; }
+  .tp-slide .tp-rm .d { font-size:8.5px; line-height:1.35; color:#6E6868; margin-top:3px; }
+  .tp-slide .tp-rm .card.cur { background:#FF4D4D; }
+  .tp-slide .tp-rm .card.cur .q { color:rgba(255,255,255,.75); }
+  .tp-slide .tp-rm .card.cur .t { color:#FFFFFF; }
+  .tp-slide .tp-rm .card.cur .d { color:rgba(255,255,255,.9); }
+
+  .tp-slide .tp-side { position:absolute; left:572px; top:96px; width:348px; }
+  .tp-slide .tp-kpi .card { height:56px; background:#F6F6F6; border-radius:2px; padding:8px 12px 9px; margin-bottom:8px; }
+  .tp-slide .tp-kpi .lb { font-size:10px; color:#484545; }
+  .tp-slide .tp-kpi .row { display:flex; justify-content:space-between; align-items:baseline; margin-top:1px; }
+  .tp-slide .tp-kpi .val { font-size:23px; font-weight:800; }
+  .tp-slide .tp-kpi .val .u { font-size:13px; }
+  .tp-slide .tp-kpi .delta { font-size:11px; color:#484545; }
+  .tp-slide .tp-kpi .card.hot { background:#FF4D4D; }
+  .tp-slide .tp-kpi .card.hot .lb { color:rgba(255,255,255,.85); }
+  .tp-slide .tp-kpi .card.hot .val { color:#FFFFFF; }
+  .tp-slide .tp-kpi .card.hot .delta { color:#FFFFFF; }
+  .tp-slide .tp-cc { margin-top:6px; }
+  .tp-slide .tp-cc .cap { font-size:10.5px; font-weight:700; margin-bottom:2px; }
+  .tp-slide .tp-cc .it { display:flex; padding:8px 0 7px; border-top:1px solid #E7E6E6; }
+  .tp-slide .tp-cc .no { width:26px; flex:none; font-size:11px; font-weight:800; color:#BDBDBD; padding-top:1px; }
+  .tp-slide .tp-cc .t { font-size:11.5px; font-weight:700; }
+  .tp-slide .tp-cc .d { font-size:9.5px; color:#6E6868; margin-top:2px; }
+
+  .tp-slide .tp-line { position:absolute; left:40px; right:40px; top:486px; height:1px; background:#E7E6E6; }
+  .tp-slide .tp-src { position:absolute; left:40px; top:496px; font-size:8.5px; color:#8F8F8F; }
+  .tp-slide .tp-foot { position:absolute; right:40px; top:495px; font-size:9px; color:#8F8F8F; }
+</style>
+<div class="tp-slide" data-theme="dusk-violet-consulting">
+  <div class="tp-eyebrow" data-module="eyebrow"><i></i>星澜计划 · 2026 年度进展</div>
+  <div class="tp-headline" data-module="headline">第二年用户规模<em>翻番</em>，单位服务成本下降 <em>38%</em></div>
+  <div class="tp-note">月活跃用户 12 个月走势、四阶段里程碑与三项节点结论 · 单位：万人</div>
+
+  <div class="tp-chart" data-module="chart">
+    <div class="ct"><b>月活趋势（万人）</b><span>单位：万人 · 25-10 至 26-09</span></div>
+    <div class="tp-bars">
+      <div class="bw"><span class="bv">28</span><i class="bar" style="height:55px"></i></div>
+      <div class="bw"><i class="bar" style="height:61px"></i></div>
+      <div class="bw"><i class="bar" style="height:68px"></i></div>
+      <div class="bw"><i class="bar" style="height:78px"></i></div>
+      <div class="bw"><i class="bar" style="height:88px"></i></div>
+      <div class="bw"><i class="bar" style="height:102px"></i></div>
+      <div class="bw"><i class="bar" style="height:113px"></i></div>
+      <div class="bw"><i class="bar" style="height:123px"></i></div>
+      <div class="bw"><i class="bar" style="height:133px"></i></div>
+      <div class="bw"><i class="bar" style="height:145px"></i></div>
+      <div class="bw"><i class="bar" style="height:156px"></i></div>
+      <div class="bw"><span class="bv hot">86</span><i class="bar hot" style="height:168px"></i></div>
+    </div>
+    <div class="tp-mons">
+      <i>25-10</i><i>25-11</i><i>25-12</i><i>26-01</i><i>26-02</i><i>26-03</i>
+      <i>26-04</i><i>26-05</i><i>26-06</i><i>26-07</i><i>26-08</i><i>26-09</i>
+    </div>
+  </div>
+
+  <div class="tp-rm" data-module="timeline">
+    <div class="cap">四阶段里程碑</div>
+    <div class="row">
+      <div class="card"><div class="q">Q1</div><div class="t">低温试点上线</div><div class="d">3 个社区、500 户家庭接入</div></div>
+      <div class="card"><div class="q">Q2</div><div class="t">开放公测</div><div class="d">注册用户首月破 40 万</div></div>
+      <div class="card"><div class="q">Q3</div><div class="t">多城复制</div><div class="d">覆盖 12 城，服务网络成型</div></div>
+      <div class="card cur"><div class="q">Q4</div><div class="t">智能调度上线</div><div class="d">运力利用率提升至 78%</div></div>
+    </div>
+  </div>
+
+  <div class="tp-side">
+    <div class="tp-kpi" data-module="kpi">
+      <div class="card"><div class="lb">累计用户</div><div class="row"><span class="val">240<span class="u">万</span></span><span class="delta">+112%</span></div></div>
+      <div class="card hot"><div class="lb">月活跃</div><div class="row"><span class="val">86<span class="u">万</span></span><span class="delta">+65%</span></div></div>
+      <div class="card"><div class="lb">单位成本</div><div class="row"><span class="val">¥3.1</span><span class="delta">−38%</span></div></div>
+    </div>
+    <div class="tp-cc" data-module="conclusions">
+      <div class="cap">节点结论</div>
+      <div class="it"><span class="no">01</span><div><div class="t">试点留存验证</div><div class="d">次月留存 61%，超基准 12 个百分点</div></div></div>
+      <div class="it"><span class="no">02</span><div><div class="t">成本拐点</div><div class="d">Q3 起规模效应显现</div></div></div>
+      <div class="it"><span class="no">03</span><div><div class="t">调度收益</div><div class="d">响应时延 −42%</div></div></div>
+    </div>
+  </div>
+
+  <div class="tp-line"></div>
+  <div class="tp-src">来源：示例数据 · 仅供主题预览</div>
+  <div class="tp-foot" data-module="footer">07 · 数据截止 2026-09 · 示例数据</div>
+</div>

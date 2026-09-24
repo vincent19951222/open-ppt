@@ -1,0 +1,122 @@
+<style>
+  .tp-slide { width:960px; height:540px; position:relative; overflow:hidden; background:#080808;
+              color:#DDE5E0; font-family:"Inter","Segoe UI","Source Han Sans SC","Noto Sans SC","Microsoft YaHei",sans-serif; }
+  .tp-slide * { margin:0; padding:0; box-sizing:border-box; }
+
+  .tp-brand { position:absolute; left:40px; top:20px; font-size:11px; color:#8A9492; letter-spacing:.04em; }
+  .tp-brand .w { color:#FFFFFF; font-weight:700; }
+  .tp-brand .r { color:#A6F05F; font-weight:700; }
+
+  .tp-headline { position:absolute; left:40px; top:38px; width:880px; font-size:26px; color:#FFFFFF;
+                 font-family:"Arial Black","Arial","Noto Sans SC","Microsoft YaHei",sans-serif;
+                 font-weight:900; line-height:1.2; letter-spacing:.01em; }
+  .tp-headline .ins { color:#7A54FF; }
+  .tp-headline .pos { color:#A6F05F; }
+
+  .tp-kpi { position:absolute; left:40px; top:100px; width:248px; }
+  .tp-kpi .blk { margin-bottom:16px; }
+  .tp-kpi .lb { font-size:10.5px; color:#8A9492; letter-spacing:.08em; }
+  .tp-kpi .vrow { display:flex; align-items:baseline; margin-top:2px; }
+  .tp-kpi .val { font-size:26px; font-weight:900; color:#FFFFFF;
+                 font-family:"Arial Black","Arial","Noto Sans SC","Microsoft YaHei",sans-serif; }
+  .tp-kpi .val .u { font-size:13px; color:#DDE5E0; }
+  .tp-kpi .delta { font-size:12px; font-weight:700; color:#A6F05F; margin-left:10px; }
+
+  .tp-vline { position:absolute; left:308px; top:100px; width:1px; height:368px; background:rgba(255,255,255,.09); }
+
+  .tp-concl { position:absolute; left:40px; top:304px; width:248px; }
+  .tp-concl .it { position:relative; padding:8px 0 9px 14px; }
+  .tp-concl .it + .it { border-top:1px solid rgba(255,255,255,.08); }
+  .tp-concl .tick { position:absolute; left:0; top:11px; width:3px; height:11px; background:#A6F05F; }
+  .tp-concl .h { font-size:12px; font-weight:700; color:#FFFFFF; }
+  .tp-concl .d { font-size:10.5px; color:#8A9492; margin-top:3px; }
+  .tp-concl .d .pos { color:#A6F05F; font-weight:700; }
+
+  .tp-chart { position:absolute; left:328px; top:98px; width:592px; }
+  .tp-chart .ct { font-size:11px; color:#B9BCA6; letter-spacing:.05em; }
+
+  .tp-tl { position:absolute; left:328px; top:392px; width:592px; height:88px; }
+  .tp-tl .rule { position:absolute; left:0; top:8px; width:592px; height:1px; background:rgba(255,255,255,.12); }
+  .tp-tl .nd { position:absolute; top:0; width:140px; }
+  .tp-tl .q { display:inline-block; font-size:10px; font-weight:800; line-height:15px; padding:0 7px;
+              border-radius:3px; background:#A6F05F; color:#080808; }
+  .tp-tl .q.alt2 { background:#7A54FF; color:#FFFFFF; }
+  .tp-tl .q.alt3 { background:#F19EE2; color:#080808; }
+  .tp-tl .q.alt4 { background:#FAEB6A; color:#080808; }
+  .tp-tl .t { font-size:11.5px; font-weight:700; color:#FFFFFF; margin-top:6px; white-space:nowrap; }
+  .tp-tl .d { font-size:9.5px; color:#8A9492; margin-top:2px; white-space:nowrap; }
+
+  .tp-footline { position:absolute; left:40px; top:498px; width:880px; height:1px; background:rgba(255,255,255,.08); }
+  .tp-foot { position:absolute; left:40px; top:508px; font-size:10px; color:#8A9492; }
+  .tp-foot .pn { color:#FFFFFF; font-weight:700; }
+</style>
+<div class="tp-slide" data-theme="dark-themed-data">
+  <div class="tp-brand" data-module="eyebrow"><span class="w">星澜计划 · 2026 年度进展</span> <span class="r">Research.</span></div>
+  <div class="tp-headline" data-module="headline"><span class="ins">第二年用户规模翻番，</span>单位服务成本下降 <span class="pos">38%</span></div>
+
+  <div class="tp-kpi" data-module="kpi">
+    <div class="blk"><div class="lb">累计用户</div><div class="vrow"><span class="val">240<span class="u">万</span></span><span class="delta">+112%</span></div></div>
+    <div class="blk"><div class="lb">月活跃</div><div class="vrow"><span class="val">86<span class="u">万</span></span><span class="delta">+65%</span></div></div>
+    <div class="blk"><div class="lb">单位成本</div><div class="vrow"><span class="val">¥3.1</span><span class="delta">−38%</span></div></div>
+  </div>
+  <div class="tp-vline"></div>
+
+  <div class="tp-concl" data-module="conclusions">
+    <div class="it"><span class="tick"></span><div class="h">试点留存验证</div><div class="d">次月留存 <span class="pos">61%</span>，超基准 12 个百分点</div></div>
+    <div class="it"><span class="tick"></span><div class="h">成本拐点</div><div class="d">Q3 起规模效应显现</div></div>
+    <div class="it"><span class="tick"></span><div class="h">调度收益</div><div class="d">响应时延 <span class="pos">−42%</span></div></div>
+  </div>
+
+  <div class="tp-chart" data-module="chart">
+    <div class="ct">月活趋势（万人）</div>
+    <svg width="592" height="250" viewBox="0 0 592 250" style="position:absolute; left:0; top:20px">
+      <line x1="36" y1="28" x2="580" y2="28" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+      <line x1="36" y1="91.3" x2="580" y2="91.3" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+      <line x1="36" y1="154.7" x2="580" y2="154.7" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+      <line x1="36" y1="218" x2="580" y2="218" stroke="rgba(255,255,255,.16)" stroke-width="1"/>
+      <text x="30" y="221" font-size="9.5" fill="#8A9492" text-anchor="end" font-family="Georgia, serif" font-style="italic">0</text>
+      <text x="30" y="157.7" font-size="9.5" fill="#8A9492" text-anchor="end" font-family="Georgia, serif" font-style="italic">30</text>
+      <text x="30" y="94.3" font-size="9.5" fill="#8A9492" text-anchor="end" font-family="Georgia, serif" font-style="italic">60</text>
+      <text x="30" y="31" font-size="9.5" fill="#8A9492" text-anchor="end" font-family="Georgia, serif" font-style="italic">90</text>
+      <polygon fill="rgba(166,240,95,.08)" points="36,158.9 85.5,152.6 134.9,144.1 184.4,133.6 233.8,123 283.3,108.2 332.7,95.6 382.2,85 431.6,74.4 481.1,61.8 530.5,49.1 580,36.4 580,218 36,218"/>
+      <polyline fill="none" stroke="#A6F05F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+        points="36,158.9 85.5,152.6 134.9,144.1 184.4,133.6 233.8,123 283.3,108.2 332.7,95.6 382.2,85 431.6,74.4 481.1,61.8 530.5,49.1 580,36.4"/>
+      <circle cx="36" cy="158.9" r="2.6" fill="#A6F05F"/><circle cx="85.5" cy="152.6" r="2.6" fill="#A6F05F"/>
+      <circle cx="134.9" cy="144.1" r="2.6" fill="#A6F05F"/><circle cx="184.4" cy="133.6" r="2.6" fill="#A6F05F"/>
+      <circle cx="233.8" cy="123" r="2.6" fill="#A6F05F"/><circle cx="283.3" cy="108.2" r="2.6" fill="#A6F05F"/>
+      <circle cx="332.7" cy="95.6" r="2.6" fill="#A6F05F"/><circle cx="382.2" cy="85" r="2.6" fill="#A6F05F"/>
+      <circle cx="431.6" cy="74.4" r="2.6" fill="#A6F05F"/><circle cx="481.1" cy="61.8" r="2.6" fill="#A6F05F"/>
+      <circle cx="530.5" cy="49.1" r="2.6" fill="#A6F05F"/>
+      <circle cx="580" cy="36.4" r="5" fill="#A6F05F" stroke="#080808" stroke-width="1.5"/>
+      <text x="44" y="153" font-size="9.5" fill="#8A9492" font-family="Georgia, serif" font-style="italic">28</text>
+      <text x="580" y="24" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle" font-family="Arial Black, Arial, sans-serif">86</text>
+      <text x="36" y="240" font-size="9" fill="#8A9492" text-anchor="middle" font-family="Georgia, serif" font-style="italic">25-10</text>
+      <text x="85.5" y="240" font-size="9" fill="#8A9492" text-anchor="middle" font-family="Georgia, serif" font-style="italic">25-11</text>
+      <text x="134.9" y="240" font-size="9" fill="#8A9492" text-anchor="middle" font-family="Georgia, serif" font-style="italic">25-12</text>
+      <text x="184.4" y="240" font-size="9" fill="#8A9492" text-anchor="middle" font-family="Georgia, serif" font-style="italic">26-01</text>
+      <text x="233.8" y="240" font-size="9" fill="#8A9492" text-anchor="middle" font-family="Georgia, serif" font-style="italic">26-02</text>
+      <text x="283.3" y="240" font-size="9" fill="#8A9492" text-anchor="middle" font-family="Georgia, serif" font-style="italic">26-03</text>
+      <text x="332.7" y="240" font-size="9" fill="#8A9492" text-anchor="middle" font-family="Georgia, serif" font-style="italic">26-04</text>
+      <text x="382.2" y="240" font-size="9" fill="#8A9492" text-anchor="middle" font-family="Georgia, serif" font-style="italic">26-05</text>
+      <text x="431.6" y="240" font-size="9" fill="#8A9492" text-anchor="middle" font-family="Georgia, serif" font-style="italic">26-06</text>
+      <text x="481.1" y="240" font-size="9" fill="#8A9492" text-anchor="middle" font-family="Georgia, serif" font-style="italic">26-07</text>
+      <text x="530.5" y="240" font-size="9" fill="#8A9492" text-anchor="middle" font-family="Georgia, serif" font-style="italic">26-08</text>
+      <text x="580" y="240" font-size="9" fill="#8A9492" text-anchor="middle" font-family="Georgia, serif" font-style="italic">26-09</text>
+    </svg>
+  </div>
+
+  <div class="tp-tl" data-module="timeline">
+    <div class="rule"></div>
+    <div class="nd" style="left:0"><span class="q">Q1</span>
+      <div class="t">低温试点上线</div><div class="d">3 个社区、500 户家庭接入</div></div>
+    <div class="nd" style="left:151px"><span class="q alt2">Q2</span>
+      <div class="t">开放公测</div><div class="d">注册用户首月破 40 万</div></div>
+    <div class="nd" style="left:302px"><span class="q alt3">Q3</span>
+      <div class="t">多城复制</div><div class="d">覆盖 12 城，服务网络成型</div></div>
+    <div class="nd" style="left:452px"><span class="q alt4">Q4</span>
+      <div class="t">智能调度上线</div><div class="d">运力利用率提升至 78%</div></div>
+  </div>
+
+  <div class="tp-footline"></div>
+  <div class="tp-foot" data-module="footer"><span class="pn">07</span> · 数据截止 2026-09 · 示例数据</div>
+</div>

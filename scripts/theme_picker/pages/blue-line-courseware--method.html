@@ -1,0 +1,102 @@
+<style>
+  .tp-slide { width:960px; height:540px; position:relative; overflow:hidden; background:#FCFCFA;
+              color:#14213D; font-family:"Source Han Sans SC","Noto Sans SC","Microsoft YaHei",sans-serif; }
+  .tp-slide * { margin:0; padding:0; box-sizing:border-box; }
+  .tp-eyebrow { position:absolute; left:42px; top:14px; font-size:10.5px; color:#8C9AA8; letter-spacing:.14em;
+                font-family:Consolas,Menlo,monospace; }
+  .tp-headline { position:absolute; left:42px; top:36px; width:880px; font-size:30px; font-weight:700; color:#14213D; }
+  .tp-headline .key { background:linear-gradient(transparent 58%, #F2C94C 58%, #F2C94C 92%, transparent 92%); }
+
+  .tp-protocol { position:absolute; left:42px; top:110px; width:880px; font-size:10.5px; color:#8C9AA8; }
+  .tp-protocol b { color:#2F80ED; font-family:Consolas,Menlo,monospace; }
+
+  .tp-kpi { position:absolute; left:42px; top:152px; width:300px; }
+  .tp-kpi .k { position:absolute; left:0; width:300px; padding-bottom:9px; border-bottom:1px solid #D8E2EA; }
+  .tp-kpi .lb { font-size:11px; color:#3E536B; }
+  .tp-kpi .vr { display:flex; align-items:baseline; justify-content:space-between; }
+  .tp-kpi .val { font-size:23px; font-weight:700; color:#14213D; }
+  .tp-kpi .val .u { font-size:12px; font-weight:500; }
+  .tp-kpi .delta { font-size:11.5px; font-weight:700; color:#2F80ED; }
+
+  .tp-concl { position:absolute; left:42px; top:330px; width:300px; }
+  .tp-ci { position:absolute; left:0; width:300px; }
+  .tp-ci .ys { position:absolute; left:0; top:4px; width:9px; height:9px; background:#F2C94C; }
+  .tp-ci .h { font-size:12.5px; font-weight:700; color:#14213D; padding-left:19px; }
+  .tp-ci .d { font-size:10.5px; color:#3E536B; padding-left:19px; margin-top:2px; }
+
+  .tp-chart { position:absolute; left:392px; top:152px; width:528px; height:250px; }
+  .tp-chart .cap { font-size:11.5px; font-weight:700; color:#14213D; }
+  .tp-chart .cond { position:absolute; right:0; top:0; font-size:9.5px; color:#8C9AA8; font-family:Consolas,Menlo,monospace; }
+
+  .tp-tl { position:absolute; left:42px; top:428px; width:880px; height:72px; }
+  .tp-tl .axis { position:absolute; left:0; top:12px; width:880px; height:1.5px; background:#D8E2EA; }
+  .tp-nd { position:absolute; top:0; width:200px; }
+  .tp-nd .n { width:25px; height:25px; border-radius:50%; border:2px solid #2F80ED; color:#2F80ED; background:#FFFFFF;
+              font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center;
+              font-family:Consolas,Menlo,monospace; }
+  .tp-nd .t { position:absolute; left:34px; top:3px; font-size:11.5px; font-weight:700; color:#14213D; }
+  .tp-nd .d { position:absolute; left:34px; top:20px; font-size:9.5px; color:#8C9AA8; white-space:nowrap; }
+
+  .tp-foot-l { position:absolute; left:42px; bottom:12px; font-size:9px; color:#8C9AA8; font-family:Consolas,Menlo,monospace; }
+  .tp-foot-r { position:absolute; right:42px; bottom:12px; font-size:9px; color:#8C9AA8; font-family:Consolas,Menlo,monospace; }
+</style>
+<div class="tp-slide" data-theme="blue-line-courseware--method">
+  <div class="tp-eyebrow" data-module="eyebrow">星澜计划 · 2026 年度进展</div>
+  <div class="tp-headline" data-module="headline">第二年用户规模翻番，单位服务成本下降 <span class="key">38%</span></div>
+  <div class="tp-protocol">实验假设 H1：规模翻番可由「复制 × 调度」两段干预达成 —— 观察期 <b>25-10 → 26-09</b> · n=12 月</div>
+
+  <div class="tp-kpi" data-module="kpi">
+    <div class="k" style="top:0"><div class="lb">累计用户</div>
+      <div class="vr"><span class="val">240<span class="u">万</span></span><span class="delta">+112%</span></div></div>
+    <div class="k" style="top:62px"><div class="lb">月活跃</div>
+      <div class="vr"><span class="val">86<span class="u">万</span></span><span class="delta">+65%</span></div></div>
+    <div class="k" style="top:124px; border-bottom:none"><div class="lb">单位成本</div>
+      <div class="vr"><span class="val">¥3.1</span><span class="delta">−38%</span></div></div>
+  </div>
+
+  <div class="tp-concl" data-module="conclusions">
+    <div class="tp-ci" style="top:0"><span class="ys"></span><div class="h">试点留存验证</div><div class="d">次月留存 61%，超基准 12 个百分点</div></div>
+    <div class="tp-ci" style="top:58px"><span class="ys"></span><div class="h">成本拐点</div><div class="d">Q3 起规模效应显现</div></div>
+    <div class="tp-ci" style="top:116px"><span class="ys"></span><div class="h">调度收益</div><div class="d">响应时延 −42%</div></div>
+  </div>
+
+  <div class="tp-chart" data-module="chart">
+    <div class="cap">月活趋势（万人）</div>
+    <div class="cond">单位:万 · 月度</div>
+    <svg width="528" height="220" viewBox="0 0 528 220" style="position:absolute; left:0; top:30px">
+      <line x1="16" y1="28"  x2="516" y2="28"  stroke="#EDF1F5" stroke-width="1"/>
+      <line x1="16" y1="76"  x2="516" y2="76"  stroke="#EDF1F5" stroke-width="1"/>
+      <line x1="16" y1="124" x2="516" y2="124" stroke="#EDF1F5" stroke-width="1"/>
+      <line x1="16" y1="172" x2="516" y2="172" stroke="#D8E2EA" stroke-width="1.4"/>
+      <line x1="16" y1="26" x2="16" y2="172" stroke="#D8E2EA" stroke-width="1.4"/>
+      <line x1="16" y1="172" x2="286" y2="146" stroke="#F2994A" stroke-width="2" stroke-dasharray="5 4" opacity=".85"/>
+      <polyline fill="none" stroke="#2F80ED" stroke-width="2.6"
+        points="286,146 329,134 372,120 415,103 458,84 502,62"/>
+      <line x1="286" y1="146" x2="286" y2="172" stroke="#8C9AA8" stroke-width="1" stroke-dasharray="3 3"/>
+      <polyline fill="none" stroke="#2F80ED" stroke-width="2"
+        points="30,166 71,161 112,155 153,148 194,141 235,132 276,149"/>
+      <circle cx="30" cy="166" r="3" fill="#2F80ED"/><circle cx="153" cy="148" r="3" fill="#2F80ED"/>
+      <circle cx="276" cy="149" r="3" fill="#FFFFFF" stroke="#2F80ED" stroke-width="2"/>
+      <circle cx="286" cy="146" r="4.6" fill="#2F80ED"/>
+      <circle cx="502" cy="62" r="5" fill="#2F80ED"/>
+      <text x="30" y="154" font-size="10" fill="#3E536B">28</text>
+      <text x="243" y="180" font-size="9.5" fill="#F2994A" font-family="Consolas,Menlo,monospace">观察期 · 待验证</text>
+      <text x="296" y="166" font-size="9.5" fill="#2F80ED" font-family="Consolas,Menlo,monospace">干预期</text>
+      <text x="497" y="50" font-size="12.5" font-weight="700" fill="#14213D" text-anchor="end">86</text>
+      <text x="30" y="192" font-size="9" fill="#8C9AA8" font-family="Consolas,Menlo,monospace">25-10</text>
+      <text x="286" y="192" font-size="9" fill="#8C9AA8" text-anchor="middle" font-family="Consolas,Menlo,monospace">26-04</text>
+      <text x="502" y="192" font-size="9" fill="#8C9AA8" text-anchor="end" font-family="Consolas,Menlo,monospace">26-09</text>
+    </svg>
+  </div>
+
+  <div class="tp-tl" data-module="timeline">
+    <div class="axis"></div>
+    <div class="tp-nd" style="left:0"><span class="n">Q1</span><span class="t">低温试点上线</span><span class="d">3 个社区、500 户家庭接入</span></div>
+    <div class="tp-nd" style="left:227px"><span class="n">Q2</span><span class="t">开放公测</span><span class="d">注册用户首月破 40 万</span></div>
+    <div class="tp-nd" style="left:454px"><span class="n">Q3</span><span class="t">多城复制</span><span class="d">覆盖 12 城，服务网络成型</span></div>
+    <div class="tp-nd" style="left:681px"><span class="n">Q4</span><span class="t">智能调度上线</span><span class="d">运力利用率提升至 78%</span></div>
+  </div>
+
+  <div class="tp-foot-l">H1 部分成立：复制段贡献主要增量</div>
+  <div class="tp-foot-r" data-module="footer">07 · 数据截止 2026-09 · 示例数据</div>
+</div>

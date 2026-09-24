@@ -49,20 +49,6 @@ AI 会生成一个项目文件夹，里面有 `.pptd` 清单、`pages/` 页面�
 用 open-ppt 做一份《XX产品介绍》PPT，10 页，用 mr-red-tech 医疗科技风
 ```
 
-**不知道用哪个主题？** 双击打开 `open-ppteference	heme-picker.html`（浏览器直接开），
-45 套主题的配色一目了然，点「复制」拿到名字，告诉 AI「用 xx 风格」即可。
-
-## 四、常见问题
-
-| 现象 | 解决 |
-|------|------|
-| 提示找不到 python | 重装 Python，勾选 Add python.exe to PATH，重开终端 |
-| 提示装 PyYAML 失败（公司内网） | 让 AI 执行：`python -m pip install --user pyyaml -i https://pypi.tuna.tsinghua.edu.cn/simple` |
-| AI 说找不到这个技能 | 检查文件夹位置：必须是 `.agents\skills\open-ppt\SKILL.md` 这个层级 |
-
-## 五、给分享者（你）的备注
-
-- 要分享的包：仓库根目录运行打包，或直接用现成的 `dist/open-ppt-skill.zip`
-- 包里只有 `open-ppt/` 一个文件夹 + 本说明，共约 8MB
-- 仓库里其余目录（bin/lib/editor/docs/example 等）**不需要发给同事**，也不影响使用
-- 技能升级后重新打一次包发给同事，让他覆盖 `open-ppt` 文件夹即可
+**不知道用哪个主题？** 双击打开 `skills\open-ppt\reference\theme-picker.html`（浏览器直接开），
+48 套主题每套都用同一份样本内容渲染了一整页真实版式，点卡片可放大；点「复制点名」拿到名字，
+告诉 AI「用 xx 风格」即可（变体主题按卡片提示带路径点名）。

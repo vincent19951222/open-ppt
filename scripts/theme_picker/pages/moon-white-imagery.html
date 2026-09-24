@@ -1,0 +1,140 @@
+<style>
+  .tp-slide { width:960px; height:540px; position:relative; overflow:hidden; background:#FFFFFF;
+              color:#99AAA0; font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",sans-serif; }
+  .tp-slide * { margin:0; padding:0; box-sizing:border-box; }
+  .tp-hd { position:absolute; left:24px; top:20px; font-size:10px; font-weight:500; letter-spacing:.08em; color:#002A12; }
+  .tp-pg { position:absolute; right:24px; top:20px; font-size:9px; color:#99AAA0; text-align:right; }
+
+  .tp-headline { position:absolute; left:24px; top:96px; width:400px; font-size:26px; font-weight:500;
+                 line-height:1.45; color:#002A12; }
+  .tp-headline .hl { color:#1ECF77; }
+  .tp-expl { position:absolute; left:24px; top:188px; width:380px; font-size:11px; line-height:1.9; color:#99AAA0; }
+
+  .tp-concl { position:absolute; left:24px; top:248px; width:380px; }
+  .tp-citem { position:absolute; left:0; width:380px; }
+  .tp-citem .h { font-size:12px; font-weight:500; color:#002A12; }
+  .tp-citem .d { margin-top:4px; font-size:9.5px; color:#99AAA0; }
+  .tp-citem .d .k { color:#002A12; font-weight:500; }
+
+  .tp-chart { position:absolute; left:430px; top:84px; width:506px; }
+  .tp-chart .caprow { display:flex; align-items:baseline; justify-content:space-between; }
+  .tp-chart .cap { font-size:11px; font-weight:500; color:#002A12; }
+  .tp-chart .note { font-size:9px; color:#99AAA0; }
+
+  .tp-timeline { position:absolute; left:24px; top:404px; width:912px; height:50px; }
+  .tp-timeline .tl-line { position:absolute; left:0; top:6px; width:912px; height:1px; background:#D6DDD9; }
+  .tp-node { position:absolute; top:0; width:216px; }
+  .tp-node .dot { position:absolute; left:0; top:0; width:12px; height:12px; border-radius:50%;
+                  border:1.5px solid #3D5D48; background:#FFFFFF; }
+  .tp-node.last .dot { background:#1ECF77; border-color:#1ECF77; }
+  .tp-node .q { position:absolute; left:20px; top:-2px; font-size:10px; font-weight:500; color:#3D5D48; }
+  .tp-node .t { position:absolute; left:0; top:17px; font-size:11px; font-weight:500; color:#002A12; white-space:nowrap; }
+  .tp-node .d { position:absolute; left:0; top:33px; width:200px; font-size:9px; color:#99AAA0; line-height:1.5; }
+
+  .tp-kpis { position:absolute; left:24px; top:470px; width:912px; height:52px; display:flex; gap:8px; }
+  .tp-kpi { flex:1; padding:7px 12px; }
+  .tp-kpi .lb { font-size:9px; color:#3D5D48; }
+  .tp-kpi .vrow { display:flex; align-items:baseline; margin-top:2px; }
+  .tp-kpi .val { font-size:19px; font-weight:500; color:#002A12; }
+  .tp-kpi .u { font-size:11px; margin-left:1px; color:#002A12; }
+  .tp-kpi .delta { margin-left:auto; font-size:10.5px; color:#3D5D48; }
+  .tp-kpi.a { background:#F2F4EF; }
+  .tp-kpi.b { background:#FDF8E0; }
+  .tp-kpi.c { background:#002A12; }
+  .tp-kpi.c .lb { color:#D6DDD9; }
+  .tp-kpi.c .val, .tp-kpi.c .u { color:#FBF9EE; }
+  .tp-kpi.c .delta { color:#1ECF77; }
+</style>
+<div class="tp-slide" data-theme="moon-white-imagery">
+  <div class="tp-hd" data-module="eyebrow">星澜计划 · 2026 年度进展</div>
+  <div class="tp-pg" data-module="footer">07 · 数据截止 2026-09 · 示例数据</div>
+
+  <div class="tp-headline" data-module="headline">第二年用户规模翻番，单位服务成本下降 <span class="hl">38%</span></div>
+  <div class="tp-expl">全年四阶段均已落地；规模增长与单位效益同步改善，服务网络进入多城复制阶段。</div>
+
+  <div class="tp-concl" data-module="conclusions">
+    <div class="tp-citem" style="top:0">
+      <div class="h">试点留存验证</div>
+      <div class="d">次月留存 <span class="k">61%</span>，超基准 <span class="k">12 个百分点</span></div>
+    </div>
+    <div class="tp-citem" style="top:44px">
+      <div class="h">成本拐点</div>
+      <div class="d">Q3 起规模效应显现</div>
+    </div>
+    <div class="tp-citem" style="top:88px">
+      <div class="h">调度收益</div>
+      <div class="d">响应时延 <span class="k">−42%</span></div>
+    </div>
+  </div>
+
+  <div class="tp-chart" data-module="chart">
+    <div class="caprow"><span class="cap">月活趋势（万人）</span><span class="note">单位：万人</span></div>
+    <svg width="506" height="276" viewBox="0 0 506 276">
+      <line x1="36" y1="36" x2="486" y2="36" stroke="#D6DDD9" stroke-width="1"/>
+      <line x1="36" y1="96" x2="486" y2="96" stroke="#D6DDD9" stroke-width="1"/>
+      <line x1="36" y1="156" x2="486" y2="156" stroke="#D6DDD9" stroke-width="1"/>
+      <line x1="36" y1="216" x2="486" y2="216" stroke="#D6DDD9" stroke-width="1"/>
+      <line x1="36" y1="240" x2="486" y2="240" stroke="#B9C8BE" stroke-width="1"/>
+      <text x="30" y="39" font-size="8" fill="#A2B2A7" text-anchor="end">90</text>
+      <text x="30" y="99" font-size="8" fill="#A2B2A7" text-anchor="end">60</text>
+      <text x="30" y="159" font-size="8" fill="#A2B2A7" text-anchor="end">30</text>
+      <text x="30" y="219" font-size="8" fill="#A2B2A7" text-anchor="end">0</text>
+      <polyline fill="none" stroke="#3D5D48" stroke-width="2"
+        points="36,176.5 76.9,169.9 117.8,160.7 158.7,149.3 199.6,138 240.5,122.1 281.4,108.7 322.3,97.3 363.2,86 404.1,72.3 445,58.7 486,45.1"/>
+      <circle cx="36" cy="176.5" r="2.5" fill="#3D5D48"/>
+      <circle cx="76.9" cy="169.9" r="2.5" fill="#3D5D48"/>
+      <circle cx="117.8" cy="160.7" r="2.5" fill="#3D5D48"/>
+      <circle cx="158.7" cy="149.3" r="2.5" fill="#3D5D48"/>
+      <circle cx="199.6" cy="138" r="2.5" fill="#3D5D48"/>
+      <circle cx="240.5" cy="122.1" r="2.5" fill="#3D5D48"/>
+      <circle cx="281.4" cy="108.7" r="2.5" fill="#3D5D48"/>
+      <circle cx="322.3" cy="97.3" r="2.5" fill="#3D5D48"/>
+      <circle cx="363.2" cy="86" r="2.5" fill="#3D5D48"/>
+      <circle cx="404.1" cy="72.3" r="2.5" fill="#3D5D48"/>
+      <circle cx="445" cy="58.7" r="2.5" fill="#3D5D48"/>
+      <circle cx="486" cy="45.1" r="5.5" fill="#1ECF77"/>
+      <text x="36" y="165" font-size="9" fill="#7D9385" text-anchor="middle">28</text>
+      <text x="486" y="30" font-size="13" font-weight="700" fill="#1ECF77" text-anchor="end">86</text>
+      <text x="36" y="262" font-size="8.5" fill="#99AAA0" text-anchor="middle">25-10</text>
+      <text x="158.7" y="262" font-size="8.5" fill="#99AAA0" text-anchor="middle">26-01</text>
+      <text x="281.4" y="262" font-size="8.5" fill="#99AAA0" text-anchor="middle">26-04</text>
+      <text x="404.1" y="262" font-size="8.5" fill="#99AAA0" text-anchor="middle">26-07</text>
+      <text x="486" y="262" font-size="8.5" fill="#1ECF77" text-anchor="end">26-09</text>
+    </svg>
+  </div>
+
+  <div class="tp-timeline" data-module="timeline">
+    <div class="tl-line"></div>
+    <div class="tp-node" style="left:0">
+      <span class="dot"></span><span class="q">Q1</span>
+      <span class="t">低温试点上线</span><span class="d">3 个社区、500 户家庭接入</span>
+    </div>
+    <div class="tp-node" style="left:232px">
+      <span class="dot"></span><span class="q">Q2</span>
+      <span class="t">开放公测</span><span class="d">注册用户首月破 40 万</span>
+    </div>
+    <div class="tp-node" style="left:464px">
+      <span class="dot"></span><span class="q">Q3</span>
+      <span class="t">多城复制</span><span class="d">覆盖 12 城，服务网络成型</span>
+    </div>
+    <div class="tp-node last" style="left:696px">
+      <span class="dot"></span><span class="q">Q4</span>
+      <span class="t">智能调度上线</span><span class="d">运力利用率提升至 78%</span>
+    </div>
+  </div>
+
+  <div class="tp-kpis" data-module="kpi">
+    <div class="tp-kpi a">
+      <div class="lb">累计用户</div>
+      <div class="vrow"><span class="val">240<span class="u">万</span></span><span class="delta">+112%</span></div>
+    </div>
+    <div class="tp-kpi b">
+      <div class="lb">月活跃</div>
+      <div class="vrow"><span class="val">86<span class="u">万</span></span><span class="delta">+65%</span></div>
+    </div>
+    <div class="tp-kpi c">
+      <div class="lb">单位成本</div>
+      <div class="vrow"><span class="val">¥3.1</span><span class="delta">−38%</span></div>
+    </div>
+  </div>
+</div>

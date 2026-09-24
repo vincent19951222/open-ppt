@@ -1,0 +1,105 @@
+<style>
+  .tp-slide { width:960px; height:540px; position:relative; overflow:hidden; background:#FFFFFF; color:#111111;
+              font-family:"Noto Sans SC","Source Han Sans SC","Microsoft YaHei",sans-serif; }
+  .tp-slide * { margin:0; padding:0; box-sizing:border-box; }
+  .tp-slide .tp-eyebrow { position:absolute; left:40px; top:18px; }
+  .tp-slide .tp-eyebrow span { display:inline-block; background:#111111; color:#FFFFFF; font-size:9.5px;
+                               letter-spacing:.08em; padding:3px 10px; border-radius:10px; }
+  .tp-slide .tp-headline { position:absolute; left:40px; top:50px; width:880px;
+                           font-family:"Arial Black","Noto Sans SC","Microsoft YaHei",sans-serif;
+                           font-weight:900; font-size:23px; line-height:1.25; }
+  .tp-slide .tp-headline em { font-style:normal; color:#F16736; }
+  .tp-slide .tp-note { position:absolute; left:40px; top:88px; font-size:10.5px; color:#837571; }
+
+  .tp-slide .tp-chart { position:absolute; left:40px; top:112px; width:552px; }
+  .tp-slide .tp-chart .ct { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+  .tp-slide .tp-chart .ct b { font-size:12.5px; font-weight:800; }
+  .tp-slide .tp-chart .ct span { font-size:9px; color:#A09C9A; }
+  .tp-slide .tp-bars { display:flex; justify-content:space-between; align-items:flex-end; height:196px; padding:0 4px; border-bottom:1px solid #E1DEDC; }
+  .tp-slide .tp-bars .bw { width:42px; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; }
+  .tp-slide .tp-bars .bv { font-size:9px; color:#A09C9A; margin-bottom:2px; }
+  .tp-slide .tp-bars .bv.hot { background:#111111; color:#FFFFFF; font-size:9px; font-weight:700; padding:2px 8px; border-radius:9px; margin-bottom:4px; }
+  .tp-slide .tp-bars .bar { width:26px; background:#FDAA74; border-radius:2px 2px 0 0; }
+  .tp-slide .tp-bars .bar.hot { background:#FC7C3D; }
+  .tp-slide .tp-mons { display:flex; justify-content:space-between; padding:0 4px; margin-top:4px; }
+  .tp-slide .tp-mons i { width:42px; font-style:normal; font-size:8px; color:#A09C9A; text-align:center; }
+
+  .tp-slide .tp-tl { position:absolute; left:40px; top:372px; width:552px; height:70px; }
+  .tp-slide .tp-tl .axis { position:absolute; left:6px; right:6px; top:8px; height:1px; background:#E1DEDC; }
+  .tp-slide .tp-tl .it { position:absolute; top:0; width:130px; }
+  .tp-slide .tp-tl .q { display:inline-block; background:#FBE6DC; color:#C22B0C; font-size:8.5px; font-weight:800;
+                        padding:2px 9px; border-radius:9px; }
+  .tp-slide .tp-tl .it.cur .q { background:#FC7C3D; color:#FFFFFF; }
+  .tp-slide .tp-tl .t { margin:14px 0 0; font-size:10px; font-weight:700; }
+  .tp-slide .tp-tl .d { margin:2px 0 0; font-size:8.5px; color:#837571; line-height:1.35; }
+
+  .tp-slide .tp-side { position:absolute; left:624px; top:112px; width:296px; }
+  .tp-slide .tp-kpi .card { height:54px; background:#F7F7F7; border-radius:3px; padding:8px 12px; margin-bottom:10px; }
+  .tp-slide .tp-kpi .lb { font-size:9.5px; color:#5B5B5B; }
+  .tp-slide .tp-kpi .row { display:flex; justify-content:space-between; align-items:baseline; margin-top:1px; }
+  .tp-slide .tp-kpi .val { font-size:21px; font-weight:800; }
+  .tp-slide .tp-kpi .val .u { font-size:12px; }
+  .tp-slide .tp-kpi .val.key { color:#F16736; }
+  .tp-slide .tp-kpi .delta { font-size:10px; color:#837571; }
+  .tp-slide .tp-cc { margin-top:2px; }
+  .tp-slide .tp-cc .it { display:flex; padding:8px 0; border-top:1px solid #E9E6E6; }
+  .tp-slide .tp-cc .it i { flex:none; width:7px; height:7px; background:#FC7C3D; margin:4px 8px 0 0; }
+  .tp-slide .tp-cc .t { font-size:11px; font-weight:700; }
+  .tp-slide .tp-cc .d { font-size:9.5px; color:#5B5B5B; margin-top:2px; }
+
+  .tp-slide .tp-line { position:absolute; left:40px; right:40px; top:478px; height:1px; background:#EFEDEA; }
+  .tp-slide .tp-src { position:absolute; left:40px; top:488px; font-size:8.5px; color:#A09C9A; }
+  .tp-slide .tp-foot { position:absolute; right:40px; top:487px; font-size:8.5px; color:#A09C9A; }
+</style>
+<div class="tp-slide" data-theme="orange-tech">
+  <div class="tp-eyebrow" data-module="eyebrow"><span>星澜计划 · 2026 年度进展</span></div>
+  <div class="tp-headline" data-module="headline">第二年用户规模<em>翻番</em>，单位服务成本下降 <em>38%</em></div>
+  <div class="tp-note">月活跃用户 12 个月走势 · 四阶段里程碑 · 三项结论（单位：万人）</div>
+
+  <div class="tp-chart" data-module="chart">
+    <div class="ct"><b>月活趋势（万人）</b><span>单位：万人 · 25-10 至 26-09</span></div>
+    <div class="tp-bars">
+      <div class="bw"><span class="bv">28</span><i class="bar" style="height:64px"></i></div>
+      <div class="bw"><i class="bar" style="height:71px"></i></div>
+      <div class="bw"><i class="bar" style="height:80px"></i></div>
+      <div class="bw"><i class="bar" style="height:91px"></i></div>
+      <div class="bw"><i class="bar" style="height:103px"></i></div>
+      <div class="bw"><i class="bar" style="height:119px"></i></div>
+      <div class="bw"><i class="bar" style="height:132px"></i></div>
+      <div class="bw"><i class="bar" style="height:144px"></i></div>
+      <div class="bw"><i class="bar" style="height:155px"></i></div>
+      <div class="bw"><i class="bar" style="height:169px"></i></div>
+      <div class="bw"><i class="bar" style="height:182px"></i></div>
+      <div class="bw"><span class="bv hot">86</span><i class="bar hot" style="height:196px"></i></div>
+    </div>
+    <div class="tp-mons">
+      <i>25-10</i><i>25-11</i><i>25-12</i><i>26-01</i><i>26-02</i><i>26-03</i>
+      <i>26-04</i><i>26-05</i><i>26-06</i><i>26-07</i><i>26-08</i><i>26-09</i>
+    </div>
+  </div>
+
+  <div class="tp-tl" data-module="timeline">
+    <div class="axis"></div>
+    <div class="it" style="left:0"><span class="q">Q1</span><div class="t">低温试点上线</div><div class="d">3 个社区、500 户家庭接入</div></div>
+    <div class="it" style="left:140px"><span class="q">Q2</span><div class="t">开放公测</div><div class="d">注册用户首月破 40 万</div></div>
+    <div class="it" style="left:281px"><span class="q">Q3</span><div class="t">多城复制</div><div class="d">覆盖 12 城，服务网络成型</div></div>
+    <div class="it cur" style="left:422px"><span class="q">Q4</span><div class="t">智能调度上线</div><div class="d">运力利用率提升至 78%</div></div>
+  </div>
+
+  <div class="tp-side">
+    <div class="tp-kpi" data-module="kpi">
+      <div class="card"><div class="lb">累计用户</div><div class="row"><span class="val">240<span class="u">万</span></span><span class="delta">+112%</span></div></div>
+      <div class="card"><div class="lb">月活跃</div><div class="row"><span class="val key">86<span class="u">万</span></span><span class="delta">+65%</span></div></div>
+      <div class="card"><div class="lb">单位成本</div><div class="row"><span class="val">¥3.1</span><span class="delta">−38%</span></div></div>
+    </div>
+    <div class="tp-cc" data-module="conclusions">
+      <div class="it"><i></i><div><div class="t">试点留存验证</div><div class="d">次月留存 61%，超基准 12 个百分点</div></div></div>
+      <div class="it"><i></i><div><div class="t">成本拐点</div><div class="d">Q3 起规模效应显现</div></div></div>
+      <div class="it"><i></i><div><div class="t">调度收益</div><div class="d">响应时延 −42%</div></div></div>
+    </div>
+  </div>
+
+  <div class="tp-line"></div>
+  <div class="tp-src">注：示例数据，仅供主题预览</div>
+  <div class="tp-foot" data-module="footer">07 · 数据截止 2026-09 · 示例数据</div>
+</div>

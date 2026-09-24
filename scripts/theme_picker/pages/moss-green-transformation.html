@@ -1,0 +1,148 @@
+<style>
+  .tp-slide { width:960px; height:540px; position:relative; overflow:hidden; background:#2C2C2C;
+              color:#F3F3F3; font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",sans-serif; }
+  .tp-slide * { margin:0; padding:0; box-sizing:border-box; }
+  /* section kicker: short green bar + all-caps English, once, top-left */
+  .tp-kicker { position:absolute; left:48px; top:22px; font-size:9px; color:#B7B7B7; letter-spacing:.26em; }
+  .tp-kicker .bar { display:inline-block; width:18px; height:3px; background:#36AA7E; margin-right:9px; vertical-align:2px; }
+  .tp-headline { position:absolute; left:48px; top:38px; width:864px; font-size:25px; font-weight:800;
+                 color:#F3F3F3; letter-spacing:.01em; }
+  .tp-headline .em { color:#36AA7E; }
+  .tp-eyebrow { position:absolute; left:48px; top:80px; font-size:10px; color:#B7B7B7; letter-spacing:.08em; }
+  .tp-div { position:absolute; left:48px; top:100px; width:864px; height:1px; background:#345A4D; }
+  /* evidence chart: dark bars, bright-green selected segment, in-chart labels */
+  .tp-chart { position:absolute; left:48px; top:114px; width:520px; }
+  .tp-chart .cap { font-size:12px; font-weight:700; color:#F3F3F3; }
+  .tp-chart .cap .u { color:#B7B7B7; font-weight:400; }
+  .tp-chart svg { display:block; margin-top:10px; }
+  /* deep-green evidence blocks, square corners, thin borders (2 of max 3) */
+  .tp-kblock { position:absolute; left:600px; top:114px; width:312px; height:112px;
+               background:#0A3021; border:1px solid #125E42; }
+  .tp-kpi { position:absolute; top:14px; width:92px; }
+  .tp-kpi .lb { font-size:8.5px; color:#B7B7B7; }
+  .tp-kpi .val { margin-top:4px; font-size:21px; font-weight:800; color:#36AA7E; white-space:nowrap; }
+  .tp-kpi .val .u { font-size:12px; font-weight:700; }
+  .tp-kpi .dl { margin-top:3px; font-size:9px; font-weight:700; color:#86C5AA; }
+  .tp-cblock { position:absolute; left:600px; top:240px; width:312px; height:122px;
+               background:#0A3021; border:1px solid #125E42; }
+  .tp-citem { position:absolute; left:12px; width:288px; }
+  .tp-citem .h { font-size:10.5px; font-weight:700; color:#F3F3F3; }
+  .tp-citem .h .ix { color:#36AA7E; font-weight:800; margin-right:6px; }
+  .tp-citem .d { margin-top:3px; font-size:8.5px; color:#B7B7B7; }
+  /* quarterly roadmap: segmented green phase bands + cells */
+  .tp-timeline { position:absolute; left:48px; top:380px; width:864px; height:70px; }
+  .tp-cell { position:absolute; top:0; width:207px; height:70px; border:1px solid #345A4D; }
+  .tp-cell .band { height:17px; background:#125E42; color:#F3F3F3; font-size:8.5px; font-weight:700;
+                   line-height:17px; padding-left:8px; letter-spacing:.08em; }
+  .tp-cell.last .band { background:#36AA7E; }
+  .tp-cell .t { margin:7px 0 0 8px; font-size:10px; font-weight:700; color:#F3F3F3; }
+  .tp-cell .d { margin:3px 0 0 8px; font-size:8.5px; color:#B7B7B7; }
+  .tp-arr { position:absolute; top:31px; width:0; height:0;
+            border-left:6px solid #36AA7E; border-top:4px solid transparent; border-bottom:4px solid transparent; }
+  .tp-foot-rule { position:absolute; left:48px; top:490px; width:864px; height:1px; background:#345A4D; }
+  .tp-foot-l { position:absolute; left:48px; top:502px; font-size:8px; color:#B7B7B7; letter-spacing:.05em; }
+  .tp-foot-r { position:absolute; right:48px; top:502px; font-size:8px; color:#B7B7B7; letter-spacing:.05em; }
+</style>
+<div class="tp-slide" data-theme="moss-green-transformation">
+  <div class="tp-kicker"><span class="bar"></span>XINGLAN PROGRAM · ANNUAL REVIEW</div>
+  <div class="tp-headline" data-module="headline">第二年用户规模<span class="em">翻番</span>，单位服务成本下降 <span class="em">38%</span></div>
+  <div class="tp-eyebrow" data-module="eyebrow">星澜计划 · 2026 年度进展</div>
+  <div class="tp-div"></div>
+
+  <div class="tp-chart" data-module="chart">
+    <div class="cap">月活趋势<span class="u">（万人）</span></div>
+    <svg width="520" height="224" viewBox="0 0 520 224">
+      <line x1="4" y1="200" x2="514" y2="200" stroke="#345A4D" stroke-width="1"/>
+      <rect x="8" y="143" width="28" height="57" fill="#345A4D"/>
+      <rect x="51" y="137" width="28" height="63" fill="#345A4D"/>
+      <rect x="94" y="129" width="28" height="71" fill="#345A4D"/>
+      <rect x="137" y="119" width="28" height="81" fill="#345A4D"/>
+      <rect x="180" y="108" width="28" height="92" fill="#345A4D"/>
+      <rect x="223" y="94" width="28" height="106" fill="#345A4D"/>
+      <rect x="266" y="82" width="28" height="118" fill="#345A4D"/>
+      <rect x="309" y="72" width="28" height="128" fill="#345A4D"/>
+      <rect x="352" y="62" width="28" height="138" fill="#345A4D"/>
+      <rect x="395" y="49" width="28" height="151" fill="#345A4D"/>
+      <rect x="438" y="37" width="28" height="163" fill="#345A4D"/>
+      <rect x="481" y="25" width="28" height="175" fill="#36AA7E"/>
+      <text x="22" y="138" font-size="8" fill="#B7B7B7" text-anchor="middle">28</text>
+      <text x="65" y="132" font-size="8" fill="#B7B7B7" text-anchor="middle">31</text>
+      <text x="108" y="124" font-size="8" fill="#B7B7B7" text-anchor="middle">35</text>
+      <text x="151" y="114" font-size="8" fill="#B7B7B7" text-anchor="middle">40</text>
+      <text x="194" y="103" font-size="8" fill="#B7B7B7" text-anchor="middle">45</text>
+      <text x="237" y="89" font-size="8" fill="#B7B7B7" text-anchor="middle">52</text>
+      <text x="280" y="77" font-size="8" fill="#B7B7B7" text-anchor="middle">58</text>
+      <text x="323" y="67" font-size="8" fill="#B7B7B7" text-anchor="middle">63</text>
+      <text x="366" y="57" font-size="8" fill="#B7B7B7" text-anchor="middle">68</text>
+      <text x="409" y="44" font-size="8" fill="#B7B7B7" text-anchor="middle">74</text>
+      <text x="452" y="32" font-size="8" fill="#B7B7B7" text-anchor="middle">80</text>
+      <text x="495" y="17" font-size="10" font-weight="700" fill="#86C5AA" text-anchor="middle">86</text>
+      <text x="8" y="216" font-size="8" fill="#B7B7B7">25-10</text>
+      <text x="280" y="216" font-size="8" fill="#B7B7B7" text-anchor="middle">26-04</text>
+      <text x="509" y="216" font-size="8" fill="#B7B7B7" text-anchor="end">26-09</text>
+    </svg>
+  </div>
+
+  <div class="tp-kblock" data-module="kpi">
+    <div class="tp-kpi" style="left:12px">
+      <div class="lb">累计用户</div>
+      <div class="val">240<span class="u">万</span></div>
+      <div class="dl">+112%</div>
+    </div>
+    <div class="tp-kpi" style="left:112px">
+      <div class="lb">月活跃</div>
+      <div class="val">86<span class="u">万</span></div>
+      <div class="dl">+65%</div>
+    </div>
+    <div class="tp-kpi" style="left:212px">
+      <div class="lb">单位成本</div>
+      <div class="val">¥3.1</div>
+      <div class="dl">−38%</div>
+    </div>
+  </div>
+
+  <div class="tp-cblock" data-module="conclusions">
+    <div class="tp-citem" style="top:12px">
+      <div class="h"><span class="ix">01</span>试点留存验证</div>
+      <div class="d">次月留存 61%，超基准 12 个百分点</div>
+    </div>
+    <div class="tp-citem" style="top:50px">
+      <div class="h"><span class="ix">02</span>成本拐点</div>
+      <div class="d">Q3 起规模效应显现</div>
+    </div>
+    <div class="tp-citem" style="top:88px">
+      <div class="h"><span class="ix">03</span>调度收益</div>
+      <div class="d">响应时延 −42%</div>
+    </div>
+  </div>
+
+  <div class="tp-timeline" data-module="timeline">
+    <div class="tp-cell" style="left:0">
+      <div class="band">Q1</div>
+      <div class="t">低温试点上线</div>
+      <div class="d">3 个社区、500 户家庭接入</div>
+    </div>
+    <div class="tp-arr" style="left:210px"></div>
+    <div class="tp-cell" style="left:219px">
+      <div class="band">Q2</div>
+      <div class="t">开放公测</div>
+      <div class="d">注册用户首月破 40 万</div>
+    </div>
+    <div class="tp-arr" style="left:429px"></div>
+    <div class="tp-cell" style="left:438px">
+      <div class="band">Q3</div>
+      <div class="t">多城复制</div>
+      <div class="d">覆盖 12 城，服务网络成型</div>
+    </div>
+    <div class="tp-arr" style="left:648px"></div>
+    <div class="tp-cell last" style="left:657px">
+      <div class="band">Q4</div>
+      <div class="t">智能调度上线</div>
+      <div class="d">运力利用率提升至 78%</div>
+    </div>
+  </div>
+
+  <div class="tp-foot-rule"></div>
+  <div class="tp-foot-l">单位：万人 · 月活跃口径</div>
+  <div class="tp-foot-r" data-module="footer">07 · 数据截止 2026-09 · 示例数据</div>
+</div>
