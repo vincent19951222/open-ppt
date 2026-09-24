@@ -1,0 +1,59 @@
+pageType: cover
+background: {type: solid, color: "$primary"}
+elements:
+  - elementId: cover-band
+    elementType: shape
+    bounds: [0, 470, 960, 70]
+    shapeName: rect
+    fill: {type: solid, color: "$maroon"}
+  - elementId: cover-rule
+    elementType: shape
+    bounds: [64, 176, 64, 3]
+    shapeName: rect
+    fill: {type: solid, color: "#FFFFFF"}
+  - elementId: cover-title
+    elementType: text
+    bounds: [64, 200, 760, 76]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:56px;color:#FFFFFF;font-weight:700;font-family:MiSans">迈瑞医疗</span></p>
+  - elementId: cover-subtitle
+    elementType: text
+    bounds: [64, 288, 760, 28]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:20px;color:#FFFFFF;font-family:MiSans">全球领先的医疗器械与解决方案供应商</span></p>
+  - elementId: cover-tagline
+    elementType: text
+    bounds: [64, 330, 760, 20]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:12px;color:#FFFFFFCC;font-family:MiSans">生命信息与支持 · 体外诊断 · 医学影像</span></p>
+  - elementId: cover-date
+    elementType: text
+    bounds: [64, 492, 400, 20]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:11px;color:#FFFFFF;font-family:MiSans">2026 · 公司介绍</span></p>
+animations:
+  - elementId: cover-title
+    effect: zoom-in
+    trigger: afterPrevious
+    durationMs: 600
+  - elementId: cover-subtitle
+    effect: fly-in
+    direction: up
+    trigger: afterPrevious
+    durationMs: 500
+  - elementId: cover-tagline
+    effect: fade-in
+    trigger: withPrevious
+    durationMs: 400

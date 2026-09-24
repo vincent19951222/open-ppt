@@ -288,6 +288,20 @@ The agent loads the matching `design.md` (or the numbered catalog `.md`) as the 
 
 ---
 
+### Healthcare / MedTech
+
+*Product solution decks for medical-technology companies: clinical value, devices / IVD / healthcare IT*
+
+#### `mr-red-tech` — MR Red Tech
+
+- **Look**: Brand deep-red medtech; red ❯ arrow titles + red-black flow diagrams / step arrows + square-corner cards + oversized red KPI numerals; bundled Mindray logo fixed at the bottom-right of every page; precision-instrument whitespace and hairline detailing
+- **File**: [`healthcare/mr-red-tech/design.md`](skills/open-kimi-ppt/reference/design_system/healthcare/mr-red-tech/design.md)
+- **Invoke**: `use mr-red-tech`
+
+*(preview image pending)*
+
+---
+
 ## Extra catalog
 
 Numbered English sheets that complement the primary catalog; invoke by theme ID the same way.
@@ -425,10 +439,11 @@ Numbered English sheets that complement the primary catalog; invoke by theme ID 
 | Work Report | `blue-flame-brand` · `electric-violet-business` · `moon-white-imagery` · `sky-blue-wayfinding` · `warm-clay-works` · `warm-jade-annual-report` |
 | Promotion / Brand | `aqua-charity-report` · `cream-collage` · `pine-soot-pictorial` · `silk-yellow-magazine` · `silver-gray-luxury-magazine` · `travel-green-handbook` |
 | Academic | `blue-line-courseware` · `deep-blue-atlas` · `paper-white-courseware` · `pastel-derivation` · `teal-green-academic-defense` · `wine-red-data` |
+| Healthcare / MedTech | `mr-red-tech` |
 | Extra | `dusk-violet-consulting` · `red-black-business` · `map-strategy` · `xuan-paper-annual` · `lead-gray-quarterly` · `ink-green-market-trends` · `orange-tech` · `mist-blue-travelogue` · `color-stripes-documentary` · `red-white-business` · `gold-orange-type-journal` · `fresh-brand` · `pink-purple-diagnosis` · `dark-themed-data` |
 
 ## Counts
 
-- Primary catalog: **30**
+- Primary catalog: **31**
 - Extra catalog: **14**
-- Total: **44**
+- Total: **45**

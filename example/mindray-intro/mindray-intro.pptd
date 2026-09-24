@@ -1,0 +1,39 @@
+version: v2
+title: 迈瑞医疗公司介绍
+size: [960, 540]
+theme:
+  colors:
+    primary: "#C8102E"
+    maroon: "#8F0C20"
+    ink: "#1A1A1A"
+    body: "#595959"
+    muted: "#8C8C8C"
+    line: "#D9D9D9"
+    panel: "#F5F5F5"
+    panelSoft: "#F5F7F8"
+    tint: "#FBE9EB"
+    inactive: "#BFBFBF"
+  textStyles:
+    pageTitle:
+      fontSize: 24
+      color: "$primary"
+      bold: true
+      fontFamily: {latin: Arial, ea: MiSans}
+    subtitle:
+      fontSize: 11
+      color: "$body"
+      fontFamily: {latin: Arial, ea: MiSans}
+    bodyText:
+      fontSize: 10.5
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: Arial, ea: MiSans}
+    footnote:
+      fontSize: 9
+      color: "$muted"
+      fontFamily: {latin: Arial, ea: MiSans}
+pages:
+  - pages/01_cover.page
+  - pages/02_platform.page
+  - pages/03_milestones.page
+  - pages/04_data.page

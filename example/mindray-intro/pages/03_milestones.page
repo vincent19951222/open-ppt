@@ -1,0 +1,235 @@
+pageType: content
+background: {type: solid, color: "#FFFFFF"}
+elements:
+  - elementId: hd-marker
+    elementType: text
+    bounds: [48, 30, 18, 30]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:20px;color:$primary;font-weight:700">❯</span></p>
+  - elementId: hd-title
+    elementType: text
+    bounds: [72, 30, 840, 30]
+    content:
+      style: "$pageTitle"
+      align: [left, middle]
+      wrap: false
+      text: 三十余年完成从单品突破到全球平台的跨越
+  - elementId: hd-subtitle
+    elementType: text
+    bounds: [72, 62, 840, 16]
+    content:
+      style: "$subtitle"
+      align: [left, middle]
+      wrap: false
+      text: 关键发展里程碑（红色 = 已完成阶段，灰色 = 进行中的新阶段）
+  - elementId: hd-rule
+    elementType: shape
+    bounds: [48, 90, 864, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+  - elementId: step-1
+    elementType: shape
+    bounds: [48, 140, 176, 48]
+    shapeName: chevron
+    fill: {type: solid, color: "$primary"}
+  - elementId: step-1-text
+    elementType: text
+    bounds: [56, 140, 160, 48]
+    content:
+      align: [center, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:11px;color:#FFFFFF;font-weight:700">1991 深圳创立</span></p>
+  - elementId: step-2
+    elementType: shape
+    bounds: [218, 140, 176, 48]
+    shapeName: chevron
+    fill: {type: solid, color: "$primary"}
+  - elementId: step-2-text
+    elementType: text
+    bounds: [230, 140, 160, 48]
+    content:
+      align: [center, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:11px;color:#FFFFFF;font-weight:700">1990s 自研突破</span></p>
+  - elementId: step-3
+    elementType: shape
+    bounds: [388, 140, 176, 48]
+    shapeName: chevron
+    fill: {type: solid, color: "$primary"}
+  - elementId: step-3-text
+    elementType: text
+    bounds: [400, 140, 160, 48]
+    content:
+      align: [center, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:11px;color:#FFFFFF;font-weight:700">2006 纽交所上市</span></p>
+  - elementId: step-4
+    elementType: shape
+    bounds: [558, 140, 176, 48]
+    shapeName: chevron
+    fill: {type: solid, color: "$primary"}
+  - elementId: step-4-text
+    elementType: text
+    bounds: [570, 140, 160, 48]
+    content:
+      align: [center, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:11px;color:#FFFFFF;font-weight:700">2018 创业板上市</span></p>
+  - elementId: step-5
+    elementType: shape
+    bounds: [728, 140, 176, 48]
+    shapeName: chevron
+    fill: {type: solid, color: "$inactive"}
+  - elementId: step-5-text
+    elementType: text
+    bounds: [740, 140, 160, 48]
+    content:
+      align: [center, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:11px;color:#595959;font-weight:700">未来 数智化生态</span></p>
+  - elementId: step-1-desc
+    elementType: text
+    bounds: [56, 200, 160, 44]
+    content:
+      style: "$footnote"
+      lineHeight: 1.4
+      align: [left, top]
+      text: 成立于深圳，从代理起步转向自主研发
+  - elementId: step-2-desc
+    elementType: text
+    bounds: [230, 200, 160, 44]
+    content:
+      style: "$footnote"
+      lineHeight: 1.4
+      align: [left, top]
+      text: 推出自主研发监护仪，打破进口垄断
+  - elementId: step-3-desc
+    elementType: text
+    bounds: [404, 200, 160, 44]
+    content:
+      style: "$footnote"
+      lineHeight: 1.4
+      align: [left, top]
+      text: 首家在美国上市的中国医疗器械企业
+  - elementId: step-4-desc
+    elementType: text
+    bounds: [574, 200, 160, 44]
+    content:
+      style: "$footnote"
+      lineHeight: 1.4
+      align: [left, top]
+      text: 登陆深交所创业板，市值居行业前列
+  - elementId: step-5-desc
+    elementType: text
+    bounds: [744, 200, 160, 44]
+    content:
+      style: "$footnote"
+      lineHeight: 1.4
+      align: [left, top]
+      text: 瑞智联、瑞影云、迈瑞智检，设备+IT+AI
+  - elementId: note-1
+    elementType: shape
+    bounds: [48, 292, 424, 96]
+    shapeName: rect
+    fill: {type: solid, color: "$panelSoft"}
+  - elementId: note-1-text
+    elementType: text
+    bounds: [64, 304, 392, 72]
+    content:
+      style: "$bodyText"
+      fontSize: 10
+      align: [left, top]
+      text: |
+        <p><span style="font-size:12px;color:$primary;font-weight:700">国际化路径</span></p>
+        <p style="margin-top:6px">通过并购 Datascope 监护业务、Zonare 超声等进入欧美主流市场，海外收入占比持续提升</p>
+  - elementId: note-2
+    elementType: shape
+    bounds: [488, 292, 424, 96]
+    shapeName: rect
+    fill: {type: solid, color: "$panelSoft"}
+  - elementId: note-2-text
+    elementType: text
+    bounds: [504, 304, 392, 72]
+    content:
+      style: "$bodyText"
+      fontSize: 10
+      align: [left, top]
+      text: |
+        <p><span style="font-size:12px;color:$primary;font-weight:700">高端化路径</span></p>
+        <p style="margin-top:6px">高端监护、超声与化学发光产品进入海外高端医院，国内市场持续实现进口替代</p>
+  - elementId: takeaway-bar
+    elementType: shape
+    bounds: [48, 452, 864, 40]
+    shapeName: rect
+    fill: {type: solid, color: "$panel"}
+  - elementId: takeaway-text
+    elementType: text
+    bounds: [72, 452, 820, 40]
+    content:
+      align: [left, middle]
+      text: |
+        <p><span style="font-size:11px;color:$primary;font-weight:700">❯ </span><span style="font-size:11px;color:$ink">每一步跨越围绕同一主线：让优质医疗科技更可及</span></p>
+  - elementId: ft-source
+    elementType: text
+    bounds: [48, 512, 400, 14]
+    content:
+      style: "$footnote"
+      align: [left, middle]
+      wrap: false
+      text: 资料来源：迈瑞医疗公开资料及公司官网
+  - elementId: ft-pagenum
+    elementType: text
+    bounds: [736, 512, 64, 14]
+    content:
+      style: "$footnote"
+      align: [right, middle]
+      wrap: false
+      text: 03 / 04
+  - elementId: ft-logo
+    elementType: image
+    bounds: [812, 503, 104, 23]
+    src: "media/mindray-lockup-wide.png"
+    fit: {mode: contain}
+animations:
+  - elementId: step-1
+    effect: fly-in
+    direction: right
+    trigger: afterPrevious
+    durationMs: 350
+  - elementId: step-2
+    effect: fly-in
+    direction: right
+    trigger: afterPrevious
+    durationMs: 350
+  - elementId: step-3
+    effect: fly-in
+    direction: right
+    trigger: afterPrevious
+    durationMs: 350
+  - elementId: step-4
+    effect: fly-in
+    direction: right
+    trigger: afterPrevious
+    durationMs: 350
+  - elementId: step-5
+    effect: fly-in
+    direction: right
+    trigger: afterPrevious
+    durationMs: 350
+  - elementId: note-1
+    effect: fade-in
+    trigger: afterPrevious
+    durationMs: 400
+  - elementId: note-2
+    effect: fade-in
+    trigger: withPrevious
+    durationMs: 400
+    delayMs: 150

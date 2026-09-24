@@ -1,0 +1,219 @@
+pageType: content
+background: {type: solid, color: "#FFFFFF"}
+elements:
+  - elementId: hd-marker
+    elementType: text
+    bounds: [48, 30, 18, 30]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:20px;color:$primary;font-weight:700">❯</span></p>
+  - elementId: hd-title
+    elementType: text
+    bounds: [72, 30, 840, 30]
+    content:
+      style: "$pageTitle"
+      align: [left, middle]
+      wrap: false
+      text: 三大业务板块构成全球化医疗器械平台
+  - elementId: hd-subtitle
+    elementType: text
+    bounds: [72, 62, 840, 16]
+    content:
+      style: "$subtitle"
+      align: [left, middle]
+      wrap: false
+      text: 覆盖生命信息与支持、体外诊断、医学影像三大领域的科室级整体方案
+  - elementId: hd-rule
+    elementType: shape
+    bounds: [48, 90, 864, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+  - elementId: card-1
+    elementType: shape
+    bounds: [48, 110, 176, 180]
+    shapeName: rect
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: card-1-icon
+    elementType: icon
+    bounds: [64, 126, 28, 28]
+    iconName: "fas:heart-pulse"
+    fill: {type: solid, color: "$primary"}
+  - elementId: card-1-title
+    elementType: text
+    bounds: [64, 162, 144, 20]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:14px;color:$primary;font-weight:700">生命信息与支持</span></p>
+  - elementId: card-1-en
+    elementType: text
+    bounds: [64, 184, 144, 14]
+    content:
+      style: "$footnote"
+      align: [left, middle]
+      wrap: false
+      text: PMLS
+  - elementId: card-1-body
+    elementType: text
+    bounds: [64, 204, 144, 72]
+    content:
+      style: "$bodyText"
+      fontSize: 10
+      align: [left, top]
+      text: 监护仪、麻醉机、呼吸机、除颤仪等重症与围术期核心设备
+  - elementId: card-2
+    elementType: shape
+    bounds: [236, 110, 176, 180]
+    shapeName: rect
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: card-2-icon
+    elementType: icon
+    bounds: [252, 126, 28, 28]
+    iconName: "fas:vial"
+    fill: {type: solid, color: "$primary"}
+  - elementId: card-2-title
+    elementType: text
+    bounds: [252, 162, 144, 20]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:14px;color:$primary;font-weight:700">体外诊断</span></p>
+  - elementId: card-2-en
+    elementType: text
+    bounds: [252, 184, 144, 14]
+    content:
+      style: "$footnote"
+      align: [left, middle]
+      wrap: false
+      text: IVD
+  - elementId: card-2-body
+    elementType: text
+    bounds: [252, 204, 144, 72]
+    content:
+      style: "$bodyText"
+      fontSize: 10
+      align: [left, top]
+      text: 血液、生化、免疫、凝血等实验室诊断仪器与配套试剂
+  - elementId: card-3
+    elementType: shape
+    bounds: [424, 110, 176, 180]
+    shapeName: rect
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: card-3-icon
+    elementType: icon
+    bounds: [440, 126, 28, 28]
+    iconName: "fas:x-ray"
+    fill: {type: solid, color: "$primary"}
+  - elementId: card-3-title
+    elementType: text
+    bounds: [440, 162, 144, 20]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:14px;color:$primary;font-weight:700">医学影像</span></p>
+  - elementId: card-3-en
+    elementType: text
+    bounds: [440, 184, 144, 14]
+    content:
+      style: "$footnote"
+      align: [left, middle]
+      wrap: false
+      text: MIS
+  - elementId: card-3-body
+    elementType: text
+    bounds: [440, 204, 144, 72]
+    content:
+      style: "$bodyText"
+      fontSize: 10
+      align: [left, top]
+      text: 超声影像系统与数字化 X 射线（DR）等影像诊断设备
+  - elementId: side-panel
+    elementType: shape
+    bounds: [624, 110, 288, 180]
+    shapeName: rect
+    fill: {type: solid, color: "$panelSoft"}
+  - elementId: side-title
+    elementType: text
+    bounds: [640, 122, 256, 20]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:13px;color:$primary;font-weight:700">平台要点</span></p>
+  - elementId: side-body
+    elementType: text
+    bounds: [640, 148, 256, 130]
+    content:
+      style: "$bodyText"
+      fontSize: 10
+      align: [left, top]
+      text: |
+        <ul>
+        <li>成立于 1991 年，总部位于深圳</li>
+        <li>产品与服务覆盖全球 190 多个国家和地区</li>
+        <li>中国医疗器械行业的代表性龙头企业</li>
+        </ul>
+  - elementId: takeaway-bar
+    elementType: shape
+    bounds: [48, 452, 864, 40]
+    shapeName: rect
+    fill: {type: solid, color: "$panel"}
+  - elementId: takeaway-text
+    elementType: text
+    bounds: [72, 452, 820, 40]
+    content:
+      align: [left, middle]
+      text: |
+        <p><span style="font-size:11px;color:$primary;font-weight:700">❯ </span><span style="font-size:11px;color:$ink">三大板块共享研发、制造与渠道体系，支撑科室级"设备 + 试剂 + 信息化"整体解决方案</span></p>
+  - elementId: ft-source
+    elementType: text
+    bounds: [48, 512, 400, 14]
+    content:
+      style: "$footnote"
+      align: [left, middle]
+      wrap: false
+      text: 资料来源：迈瑞医疗公开资料及公司官网
+  - elementId: ft-pagenum
+    elementType: text
+    bounds: [736, 512, 64, 14]
+    content:
+      style: "$footnote"
+      align: [right, middle]
+      wrap: false
+      text: 02 / 04
+  - elementId: ft-logo
+    elementType: image
+    bounds: [812, 503, 104, 23]
+    src: "media/mindray-lockup-wide.png"
+    fit: {mode: contain}
+animations:
+  - elementId: card-1
+    effect: rise-in
+    trigger: afterPrevious
+    durationMs: 400
+  - elementId: card-2
+    effect: rise-in
+    trigger: withPrevious
+    durationMs: 400
+    delayMs: 120
+  - elementId: card-3
+    effect: rise-in
+    trigger: withPrevious
+    durationMs: 400
+    delayMs: 240
+  - elementId: side-panel
+    effect: fade-in
+    trigger: afterPrevious
+    durationMs: 450
+  - elementId: takeaway-bar
+    effect: fade-in
+    trigger: afterPrevious
+    durationMs: 400

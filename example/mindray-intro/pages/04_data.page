@@ -1,0 +1,208 @@
+pageType: content
+background: {type: solid, color: "#FFFFFF"}
+elements:
+  - elementId: hd-marker
+    elementType: text
+    bounds: [48, 30, 18, 30]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:20px;color:$primary;font-weight:700">❯</span></p>
+  - elementId: hd-title
+    elementType: text
+    bounds: [72, 30, 840, 30]
+    content:
+      style: "$pageTitle"
+      align: [left, middle]
+      wrap: false
+      text: 营收持续增长，研发投入强度保持行业高位
+  - elementId: hd-subtitle
+    elementType: text
+    bounds: [72, 62, 840, 16]
+    content:
+      style: "$subtitle"
+      align: [left, middle]
+      wrap: false
+      text: 2023 年经营与研发投入核心指标
+  - elementId: hd-rule
+    elementType: shape
+    bounds: [48, 90, 864, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+  - elementId: kpi-1
+    elementType: shape
+    bounds: [48, 116, 272, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$panelSoft"}
+  - elementId: kpi-1-num
+    elementType: text
+    bounds: [68, 130, 232, 50]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:44px;color:$primary;font-weight:700">349.3</span><span style="font-size:16px;color:$primary;font-weight:700"> 亿元</span></p>
+  - elementId: kpi-1-cap
+    elementType: text
+    bounds: [68, 186, 232, 36]
+    content:
+      style: "$footnote"
+      fontSize: 10
+      color: "$body"
+      lineHeight: 1.4
+      align: [left, top]
+      text: 2023 年营业收入（同比 +15.0%）
+  - elementId: kpi-2
+    elementType: shape
+    bounds: [344, 116, 272, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$panelSoft"}
+  - elementId: kpi-2-num
+    elementType: text
+    bounds: [364, 130, 232, 50]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:44px;color:$primary;font-weight:700">190+</span></p>
+  - elementId: kpi-2-cap
+    elementType: text
+    bounds: [364, 186, 232, 36]
+    content:
+      style: "$footnote"
+      fontSize: 10
+      color: "$body"
+      lineHeight: 1.4
+      align: [left, top]
+      text: 产品与服务覆盖的国家和地区
+  - elementId: kpi-3
+    elementType: shape
+    bounds: [640, 116, 272, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$panelSoft"}
+  - elementId: kpi-3-num
+    elementType: text
+    bounds: [660, 130, 232, 50]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:44px;color:$primary;font-weight:700">37.8</span><span style="font-size:16px;color:$primary;font-weight:700"> 亿元</span></p>
+  - elementId: kpi-3-cap
+    elementType: text
+    bounds: [660, 186, 232, 36]
+    content:
+      style: "$footnote"
+      fontSize: 10
+      color: "$body"
+      lineHeight: 1.4
+      align: [left, top]
+      text: 2023 年研发投入（约占营收 10.8%）
+  - elementId: chart-title
+    elementType: text
+    bounds: [48, 244, 300, 16]
+    content:
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="font-size:10.5px;color:$ink;font-weight:700">营业收入（亿元）</span></p>
+  - elementId: revenue-chart
+    elementType: chart
+    bounds: [48, 264, 540, 172]
+    data:
+      cols: [year, revenue]
+      rows:
+        - ["2021", 252.7]
+        - ["2022", 303.7]
+        - ["2023", 349.3]
+    series:
+      - type: bar
+        encode: {x: year, y: revenue}
+        fill: "$primary"
+        dataLabels: {show: true, content: value, numberFormat: "0.0", color: "#FFFFFF"}
+    legend: false
+    fontFamily: MiSans
+    xAxis: {label: {color: "#595959", fontSize: 10}, gridLine: false}
+    yAxis: {show: false, gridLine: false}
+  - elementId: read-panel
+    elementType: shape
+    bounds: [612, 262, 300, 176]
+    shapeName: rect
+    fill: {type: solid, color: "$panelSoft"}
+  - elementId: read-text
+    elementType: text
+    bounds: [628, 274, 268, 152]
+    content:
+      style: "$bodyText"
+      fontSize: 10
+      align: [left, top]
+      text: |
+        <p><span style="font-size:12px;color:$primary;font-weight:700">解读</span></p>
+        <ul>
+        <li>2021—2023 年营业收入复合增长约 17.6%</li>
+        <li>研发投入占营收比重连续保持 10% 以上</li>
+        <li>国际化与高端化构成下一阶段增长主线</li>
+        </ul>
+  - elementId: takeaway-bar
+    elementType: shape
+    bounds: [48, 452, 864, 40]
+    shapeName: rect
+    fill: {type: solid, color: "$panel"}
+  - elementId: takeaway-text
+    elementType: text
+    bounds: [72, 452, 820, 40]
+    content:
+      align: [left, middle]
+      text: |
+        <p><span style="font-size:11px;color:$primary;font-weight:700">❯ </span><span style="font-size:11px;color:$ink">高强度研发投入支撑高端产品突破，国际市场打开第二增长曲线</span></p>
+  - elementId: ft-source
+    elementType: text
+    bounds: [48, 512, 400, 14]
+    content:
+      style: "$footnote"
+      align: [left, middle]
+      wrap: false
+      text: 数据来源：迈瑞医疗 2023 年年度报告
+  - elementId: ft-pagenum
+    elementType: text
+    bounds: [736, 512, 64, 14]
+    content:
+      style: "$footnote"
+      align: [right, middle]
+      wrap: false
+      text: 04 / 04
+  - elementId: ft-logo
+    elementType: image
+    bounds: [812, 503, 104, 23]
+    src: "media/mindray-lockup-wide.png"
+    fit: {mode: contain}
+animations:
+  - elementId: kpi-1
+    effect: rise-in
+    trigger: afterPrevious
+    durationMs: 400
+  - elementId: kpi-2
+    effect: rise-in
+    trigger: withPrevious
+    durationMs: 400
+    delayMs: 120
+  - elementId: kpi-3
+    effect: rise-in
+    trigger: withPrevious
+    durationMs: 400
+    delayMs: 240
+  - elementId: revenue-chart
+    effect: fly-in
+    direction: up
+    trigger: afterPrevious
+    durationMs: 600
+  - elementId: read-panel
+    effect: fade-in
+    trigger: withPrevious
+    durationMs: 500
+    delayMs: 200
+  - elementId: takeaway-bar
+    effect: fade-in
+    trigger: afterPrevious
+    durationMs: 400

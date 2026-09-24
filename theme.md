@@ -288,6 +288,20 @@ Agent 会读取对应 `design.md`（或补充目录下的同名 `.md`）作为�
 
 ---
 
+### 医疗科技 · Healthcare / MedTech
+
+*适合医疗科技企业产品方案、临床价值论证、设备/IVD/医疗信息化汇报*
+
+#### `mr-red-tech` — MR Red Tech
+
+- **风格**: 深红品牌医疗科技风，红色❯箭头标题 + 红黑流程图/步骤箭头 + 直角卡片 + 超大号红色数据数字；内置迈瑞 Logo（每页右下角固定），精密仪器级留白与细线层次
+- **文件**: [`healthcare/mr-red-tech/design.md`](skills/open-kimi-ppt/reference/design_system/healthcare/mr-red-tech/design.md)
+- **点名**: `用 mr-red-tech`
+
+*（预览图待补充）*
+
+---
+
 ## 补充目录
 
 与主目录互补的编号英文稿；同样可按主题 ID 点名。
@@ -425,10 +439,11 @@ Agent 会读取对应 `design.md`（或补充目录下的同名 `.md`）作为�
 | 工作汇报 | `blue-flame-brand` · `electric-violet-business` · `moon-white-imagery` · `sky-blue-wayfinding` · `warm-clay-works` · `warm-jade-annual-report` |
 | 品牌推广 | `aqua-charity-report` · `cream-collage` · `pine-soot-pictorial` · `silk-yellow-magazine` · `silver-gray-luxury-magazine` · `travel-green-handbook` |
 | 学术教育 | `blue-line-courseware` · `deep-blue-atlas` · `paper-white-courseware` · `pastel-derivation` · `teal-green-academic-defense` · `wine-red-data` |
+| 医疗科技 | `mr-red-tech` |
 | 补充 | `dusk-violet-consulting` · `red-black-business` · `map-strategy` · `xuan-paper-annual` · `lead-gray-quarterly` · `ink-green-market-trends` · `orange-tech` · `mist-blue-travelogue` · `color-stripes-documentary` · `red-white-business` · `gold-orange-type-journal` · `fresh-brand` · `pink-purple-diagnosis` · `dark-themed-data` |
 
 ## 统计
 
-- 主目录：**30** 套
+- 主目录：**31** 套
 - 补充目录：**14** 套
-- 合计：**44**
+- 合计：**45**
