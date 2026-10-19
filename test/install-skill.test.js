@@ -25,6 +25,9 @@ test("installs the packaged skill into a custom skills directory", () => {
     assert.equal(result.status, 0, result.stderr);
     assert.equal(existsSync(join(target, "open-ppt", "SKILL.md")), true);
     assert.equal(existsSync(join(target, "open-ppt", "scripts", "export_pptx.py")), true);
+    for (const resource of ["scripts/translate_pptx.py", "scripts/restyle_pptx.py", "reference/workflows/create.md", "reference/workflows/translate.md", "reference/workflows/restyle.md", "reference/outline.md", "reference/design_system/healthcare/mr-red-tech/assets/mindray-lockup-wide.png"]) {
+      assert.equal(existsSync(join(target, "open-ppt", resource)), true, resource);
+    }
     assert.equal(existsSync(join(target, "open-ppt", "_user_meta.json")), false);
   } finally {
     rmSync(root, { recursive: true, force: true });

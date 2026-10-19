@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, rmSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -41,7 +41,7 @@ test("compile-pptx produces a structurally valid native pptx", { skip: !existsSy
 
   // 2 slides; page 2 pairs a chart with an animation targeting the chart
   // element itself, which must not emit a dangling spid reference.
-  const validate = runPython(validator, [output, "2"]);
+  const validate = runPython(validator, [output, "2", "none"]);
   assert.ok(validate, "no python3 interpreter found");
   assert.equal(
     validate.status,
@@ -49,4 +49,12 @@ test("compile-pptx produces a structurally valid native pptx", { skip: !existsSy
     `validation failed:\nstdout: ${validate.stdout}\nstderr: ${validate.stderr}`,
   );
   assert.match(validate.stdout, /VALIDATE OK: 2 slides/);
+
+  const retained = join(workDir, "with-template-fonts.pptx");
+  const keepFonts = spawnSync(process.execPath, [join(packageRoot, "bin", "open-ppt.js"), "compile", fixture, "--output", retained, "--keep-template-fonts"], { encoding: "utf8" });
+  assert.equal(keepFonts.status, 0, `${keepFonts.stdout}\n${keepFonts.stderr}`);
+  const validateFonts = runPython(validator, [retained, "2", "embedded"]);
+  assert.ok(validateFonts, "no python3 interpreter found");
+  assert.equal(validateFonts.status, 0, `${validateFonts.stdout}\n${validateFonts.stderr}`);
+  assert.ok(statSync(output).size < statSync(retained).size, "default output should be smaller without embedded fonts");
 });

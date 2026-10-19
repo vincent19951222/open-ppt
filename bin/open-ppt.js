@@ -57,6 +57,7 @@ Usage:
 
 Options:
   -o, --output <file>  Output .pptx path (default: next to the .pptd manifest)
+  --keep-template-fonts  Retain template-embedded fonts (larger file; off by default)
   -h, --help           Show this help
   -V, --version        Show version
 
@@ -144,6 +145,11 @@ function parseArguments(arguments_) {
 
     if (command === "compile" && !argument.startsWith("-") && !options.input) {
       options.input = argument;
+      continue;
+    }
+
+    if (command === "compile" && argument === "--keep-template-fonts") {
+      options.keepTemplateFonts = true;
       continue;
     }
 
@@ -427,6 +433,7 @@ function runCompile(options) {
   }
   const args = [resolve(options.input)];
   if (options.output) args.push("--output", resolve(options.output));
+  if (options.keepTemplateFonts) args.push("--keep-template-fonts");
 
   let lastError = null;
   for (const pyExec of pythonCandidates()) {

@@ -5,7 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/open-ppt)](https://www.npmjs.com/package/open-ppt)
 [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
 
-逆向 Kimi Slides 实现的非官方演示文稿 Skill，让 AI Coding Agent 可以创建、编辑、复刻、读取并导出 PPT/PPTX。每次生成默认产出两份文件：可继续编辑的 PPTD 项目，以及嵌入字体、带淡入淡出翻页切换的 PPTX。支持页内元素动画和[预设主题](theme.md)，附带本地浏览器编辑器，可随时手动导出 PPTX。支持 Codex、Claude Code、Cursor、WorkBuddy 等任何兼容 SKILL.md 规范的 Agent。
+逆向 Kimi Slides 实现的非官方演示文稿 Skill，让 AI Coding Agent 可以创建、编辑、复刻、读取并导出 PPT/PPTX。新建 PPT 默认先交付 Markdown 内容稿供审查，确认后制作；最终产出可继续编辑的 PPTD 项目，以及带淡入淡出翻页切换的 PPTX，默认不嵌入字体以减小体积。支持页内元素动画和[预设主题](theme.md)，附带本地浏览器编辑器，可随时手动导出 PPTX。支持 Codex、Claude Code、Cursor、WorkBuddy 等任何兼容 SKILL.md 规范的 Agent。
 
 > [!IMPORTANT]
 > 本项目通过逆向分析 Kimi Slides Skill、PPTD 格式以及公开网页编辑器的前端行为与通信协议实现，并非 Kimi 或 Moonshot AI 的官方项目，也未获得其认可或支持。项目依赖的公开前端资源和兼容协议可能随 Kimi 更新而失效，仅供学习与研究使用。
@@ -60,11 +60,49 @@ npx open-ppt@latest install --target ~/.codex/skills --target ~/.claude/skills
 
 ## 使用
 
+### 工作模式
+
+一个 Skill 入口，根据任务选择流程，无需每次手动选模式：
+
+| 模式 | 示例 | 流程 |
+| --- | --- | --- |
+| Mode 1：制作 | 「根据这份材料做英文 PPT」 | 先审查逐页 `outline.md`，再生成 PPTD 项目和 PPTX。 |
+| Mode 2：翻译 | 「把这份中文 PPT 翻成英文，保留格式」 | 直接修改原 PPTX 的副本，翻译后核对交付，默认不审查 outline。 |
+| Mode 3：格式统一 | 「把这份 PPT 统一成迈瑞红，内容保持不变」 | 保留原生对象，统一配色、字体、标题、页脚与 Logo，并按页调整布局。 |
+
+可以明确说「制作模式」「翻译模式」或「Mode 3」。仅上传 PPT 或提到英文不会自动进入翻译；既翻译又重设计时，会先明确是否还要保留原版式。新建一份迈瑞红 PPT 仍属于制作模式，已有 PPT 内容不变、统一格式才进入 Mode 3。`SKILL.md` 只保留模式入口，各流程按需加载。
+
+### 统一成迈瑞红
+
+```text
+使用 open-ppt Mode 3，把附件 PPT 统一成迈瑞红格式。
+保留原内容、页数、顺序和语言，统一标题、字体、配色、页脚和 Logo。
+```
+
+支持「麦瑞红」「Mindray Red」「mr-red-tech」等写法。默认使用固定规范与已有 Logo，16:9 画布、红白灰黑配色、Segoe UI／微软雅黑，不嵌入字体；照片、医学影像和证据截图保留原色。按现有内容逐页重排，不会自动改写、拆页、合页或增加 outline 审查。
+
+Mode 3 使用 `scripts/restyle_pptx.py`，需要 Python 和 `python-pptx`（缺失时运行 `python -m pip install python-pptx`）。Agent 先读取对象清单和源媒体、规划标题与对象位置，再输出独立的原生 PPTX、布局计划及检查报告。表格、图表、备注和超链接保留；复杂对象、语义配色和继承的母版内容仍需逐页复核。自动统一与整体缩放是起点，最终排版需渲染检查；没有渲染条件时会明确标注待视觉复核。
+
+### 翻译现有 PPT
+
+```text
+使用 open-ppt 翻译模式，把附件中文 PPT 翻成英文，保留原页数、顺序和整体版式。
+使用附件术语表，产品名称和型号保持一致。
+```
+
+支持指定范围，例如「只翻译第 3～8 页」。默认先分析全篇术语再翻译；可说「快翻」，或「精翻，正式对外使用」来增加审校与润色。质量流程参考 [baoyu-translate](https://github.com/JimLiu/baoyu-skills/blob/main/skills/baoyu-translate/SKILL.md)，已针对 PPT 的段落、样式和版面约束调整。
+
+Agent 使用自带的 `scripts/translate_pptx.py` 提取段落、准备译文并写回新 PPTX。工具仅需 Python 标准库，不调用翻译 API，也不经 PPTD 重新生成。它保留原对象和未改动的包内容，支持必要的显式字号调整；布局仍需渲染检查。图片内文字、原生图表、SmartArt、动态字段及母版文字需要单独检查，报告会列出候选项，不会把未处理内容宣称为已翻译。当前输入支持 `.pptx`，旧 `.ppt` 需先转换。
+
 ### 让 Agent 生成 PPT
 
-安装完成后，直接向 Agent 描述需求即可。默认会同时生成完整的 PPTD 项目目录（可继续编辑）和对应的 PPTX 文件；只有明确要求只输出 PPTD 时才会跳过 PPTX 生成。
+安装完成后，直接向 Agent 描述需求即可。新建 PPT 默认先交付 `outline.md`，逐页列明主题、实际标题、完整正文，以及适用的图表建议、来源和待确认项。你可以先调整页数和内容；明确回复「内容没问题，开始做 PPT」后，Agent 才会生成完整的 PPTD 项目目录（可继续编辑）和对应的 PPTX 文件，并保留内容稿。
+
+如果只需要内容稿，可以在这一步结束；如果明确要求「跳过内容稿审查，直接制作」，则直接进入制作。已明确确认的逐页内容稿无需重复审批。局部修改或忠实复刻现有 PPT 默认不增加内容稿审查。只有明确要求只输出 PPTD 时才会跳过 PPTX 生成。
 
 为了更稳定的出品，Prompt 里最好带上风格（如「深色产品发布风」），或附上参考 PPT 模板；只写主题、不给风格时效果更容易波动。
+
+默认采用常见 Windows 字体（正文字体 Segoe UI／微软雅黑），编译时不嵌入字体，避免把基础模板中的约 4.87 MB MiSans 字体数据带入每一份成品。字体属于接收方电脑的资源，并非 PPTX 内置；缺失时仍可能被替换。若确实需要保留模板已有的嵌入字体，可运行 `npx open-ppt compile <dir> --keep-template-fonts`（Python 编译脚本也支持该参数）；此选项不会自动嵌入任意自定义字体。翻译模式保留原稿的字体设置，不会额外嵌入字体。
 
 #### Prompt 示例
 
@@ -146,10 +184,13 @@ macOS / Linux 无此行为，不受影响。
 
 ## 功能特性
 
+- 内容稿审查：新建 PPT 先交付逐页 Markdown 内容稿，用户确认后再制作页面，减少内容和版式同时返工。
+- PPTX 翻译：直接回写原 PPTX 的副本，支持术语统一、指定页码、分级审校和必要字号调整，并输出覆盖范围与待检查对象报告。
+- 迈瑞红格式统一：保留原 PPTX 的内容及原生对象，按固定规范统一页面，并保留逐页布局计划与检查报告。
 - PPTD 生成：让 Agent 生成完整、可继续编辑的 PPTD 项目，支持从零创作、风格迁移、模板复用、图片/PDF 复刻。
 - 预设主题：内置约 30 套官方同款 design system，点名即可套用；完整列表与预览图见 [theme.md](theme.md)。
 - 元素动画：默认不加。提示词加上「要求带元素入场动画」即可，由 AI 按页编排合适的入场效果。
-- PPTX 生成：默认同步生成 PPTX，自动嵌入字体并写入淡入淡出翻页切换（与页内元素动画是两回事）。
+- PPTX 生成：默认同步生成 PPTX，不嵌入字体，并写入淡入淡出翻页切换（与页内元素动画是两回事）；可显式保留模板已有的嵌入字体。
 - 视觉质检：多模态模型在导出 PPTX 前自动导出整份页面图片、拼接总览图逐项核查（变形、遮挡、出界、对比度、排版、文字溢出），问题页面修复后复检，直至全部通过。
 - 在线编辑：通过浏览器查看和编辑本地 PPTD 项目，自动保存，可配置页面切换动画。
 - 手动导出：在编辑器中随时手动导出 PPTX。
@@ -172,7 +213,7 @@ macOS / Linux 无此行为，不受影响。
 具体来说：
 
 - PPTD 用 YAML 描述主题、布局与元素，比直接写 OOXML / pptxgenjs 更稳，也比整页渲一张图更方便局部修改。
-- 默认同时交付两份文件：可继续迭代的 PPTD 项目，加上嵌字体、带淡入淡出翻页的 PPTX，不是只给半成品。
+- 制作完成后同时交付可继续迭代的 PPTD 项目和带淡入淡出翻页的 PPTX；默认不嵌入字体，减少文件体积。
 - 提示词写「要求带元素入场动画」即可启用元素动画，具体效果与节奏由 AI 处理，不用自己点名动画类型。
 - 导出的 PPTX 里，文本框、形状仍可在 PowerPoint / WPS 中编辑，不像图片型 PPT 只能当海报。
 - 浏览器里可以预览、微调、配置切换动画并再次导出，不用每次都让 Agent 重跑全流程。
@@ -241,6 +282,8 @@ deck/
 这是针对当前公开实现的兼容宿主，不是稳定的官方 SDK。Kimi 更新前端资源哈希、PPTD 格式或 iframe/RPC 协议后，本项目可能需要同步升级。成功生成 PPTX 也不代表 PowerPoint、WPS 和 Keynote 对所有动画效果都能完全一致地播放。
 
 ## 本地开发
+
+Mode 3 运行与回归测试需要 `python-pptx`，先执行 `python -m pip install python-pptx`。
 
 ```bash
 npm install --global .

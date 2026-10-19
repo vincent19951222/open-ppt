@@ -5,7 +5,7 @@ Catches the two defect classes found in lib/compile-pptx.py:
 1. OPC parts rewritten without namespace (breaks PowerPoint/python-pptx open).
 2. Animation <p:spTgt spid> referencing shape ids absent from the slide spTree.
 
-Usage: validate_pptx.py <file.pptx> <expected-slide-count>
+Usage: validate_pptx.py <file.pptx> <expected-slide-count> [none|embedded]
 """
 
 import posixpath
@@ -74,6 +74,23 @@ def main() -> None:
         fail(f"expected {expect_slides} slides, package has {len(slides)}")
 
     presentation = ET.fromstring(archive.read("ppt/presentation.xml"))
+    if len(sys.argv) > 3:
+        embedded_fonts = presentation.find(f"{P_NS}embeddedFontLst")
+        font_parts = [name for name in names if name.startswith("ppt/fonts/") and not name.endswith("/")]
+        font_rels = [rel for name in names if name.endswith(".rels")
+                     for rel in ET.fromstring(archive.read(name)) if rel.get("Type", "").endswith("/font")]
+        if sys.argv[3] == "none":
+            if font_parts or font_rels or embedded_fonts is not None:
+                fail("default output still contains embedded fonts or their references")
+            if any("font" in child.get("ContentType", "").lower() for child in ct_root):
+                fail("font content types were not removed")
+            if presentation.get("embedTrueTypeFonts") in {"1", "true"}:
+                fail("font embedding is still enabled")
+        elif sys.argv[3] == "embedded":
+            if not font_parts or not font_rels or embedded_fonts is None:
+                fail("explicit template-font retention did not retain the embedding")
+        else:
+            fail("unknown font policy")
     slide_id_list = presentation.find(f"{P_NS}sldIdLst")
     if slide_id_list is None or len(slide_id_list) != expect_slides:
         fail("presentation.xml sldIdLst does not match expected slide count")

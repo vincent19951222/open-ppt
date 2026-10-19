@@ -595,7 +595,7 @@ def build_slide_xml(
 """
     return slide_xml, slide_rels
 
-def compile_pptd(pptd_path: Path, output_pptx: Path, template_pptx: Path) -> None:
+def compile_pptd(pptd_path: Path, output_pptx: Path, template_pptx: Path, *, keep_template_fonts: bool = False) -> None:
     manifest = yaml.safe_load(pptd_path.read_text(encoding="utf-8"))
     theme = manifest.get("theme", {})
     theme_colors = theme.get("colors", {})
@@ -624,6 +624,8 @@ def compile_pptd(pptd_path: Path, output_pptx: Path, template_pptx: Path) -> Non
             filename = item.filename
             if filename.startswith("ppt/slides/"):
                 continue
+            if not keep_template_fonts and filename.startswith("ppt/fonts/"):
+                continue
             data = src.read(filename)
             if filename == "[Content_Types].xml":
                 ct_root = ET.fromstring(data)
@@ -632,7 +634,13 @@ def compile_pptd(pptd_path: Path, output_pptx: Path, template_pptx: Path) -> Non
                     def_png = ET.SubElement(ct_root, f"{{{CT_NS}}}Default")
                     def_png.set("Extension", "png")
                     def_png.set("ContentType", "image/png")
-                to_remove = [c for c in ct_root if c.attrib.get("PartName", "").startswith("/ppt/slides/slide")]
+                to_remove = [c for c in ct_root if c.attrib.get("PartName", "").startswith("/ppt/slides/slide")
+                             or (not keep_template_fonts and (
+                                 c.attrib.get("PartName", "").startswith("/ppt/fonts/")
+                                 or c.attrib.get("ContentType", "") in {
+                                     "application/x-fontdata",
+                                     "application/vnd.openxmlformats-officedocument.obfuscatedFont",
+                                 }))]
                 for r in to_remove:
                     ct_root.remove(r)
                 for i in range(1, num_slides + 1):
@@ -642,6 +650,12 @@ def compile_pptd(pptd_path: Path, output_pptx: Path, template_pptx: Path) -> Non
                 data = ET.tostring(ct_root, encoding="utf-8", xml_declaration=True)
             elif filename == "ppt/presentation.xml":
                 p_root = ET.fromstring(data)
+                if not keep_template_fonts:
+                    embedded_fonts = p_root.find(f"{{{P_NS}}}embeddedFontLst")
+                    if embedded_fonts is not None:
+                        p_root.remove(embedded_fonts)
+                    p_root.attrib.pop("embedTrueTypeFonts", None)
+                    p_root.attrib.pop("saveSubsetFonts", None)
                 sldIdLst = p_root.find(f"{{{P_NS}}}sldIdLst")
                 if sldIdLst is not None:
                     sldIdLst.clear()
@@ -652,7 +666,8 @@ def compile_pptd(pptd_path: Path, output_pptx: Path, template_pptx: Path) -> Non
                 data = ET.tostring(p_root, encoding="utf-8", xml_declaration=True)
             elif filename == "ppt/_rels/presentation.xml.rels":
                 r_root = ET.fromstring(data)
-                to_remove = [c for c in r_root if c.attrib.get("Type", "").endswith("/slide")]
+                to_remove = [c for c in r_root if c.attrib.get("Type", "").endswith("/slide")
+                             or (not keep_template_fonts and c.attrib.get("Type", "").endswith("/font"))]
                 for r in to_remove:
                     r_root.remove(r)
                 for i in range(1, num_slides + 1):
@@ -706,6 +721,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Compile PPTD to native OOXML PPTX")
     parser.add_argument("input", type=Path, help=".pptd manifest or project directory")
     parser.add_argument("--output", "-o", type=Path, help="output .pptx path")
+    parser.add_argument("--keep-template-fonts", action="store_true",
+                        help="retain fonts already embedded in the base template (increases file size; does not embed arbitrary fonts)")
     args = parser.parse_args()
 
     project_root = Path(__file__).resolve().parent.parent
@@ -723,4 +740,4 @@ if __name__ == "__main__":
         pptd_file = inp
         out_file = args.output or inp.with_suffix(".pptx")
 
-    compile_pptd(pptd_file, out_file, template)
+    compile_pptd(pptd_file, out_file, template, keep_template_fonts=args.keep_template_fonts)

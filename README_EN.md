@@ -5,7 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/open-ppt)](https://www.npmjs.com/package/open-ppt)
 [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
 
-An unofficial presentation skill for AI coding agents, reverse-engineered from Kimi Slides. It lets your agent create, edit, replicate, read, and export PPT/PPTX files. Each run produces two outputs by default: an editable PPTD project, and a PPTX with embedded fonts and fade page transitions. On-slide element animations and [preset themes](theme_EN.md) are supported, and a local in-browser PPTD editor is included for manual export. Works with Codex, Claude Code, Cursor, WorkBuddy, and any agent that supports the SKILL.md format.
+An unofficial presentation skill for AI coding agents, reverse-engineered from Kimi Slides. It lets your agent create, edit, replicate, read, and export PPT/PPTX files. New presentations start with a Markdown content draft for approval before slide production. Final delivery includes an editable PPTD project and a PPTX with fade page transitions; fonts are not embedded by default to keep files smaller. On-slide element animations and [preset themes](theme_EN.md) are supported, and a local in-browser PPTD editor is included for manual export. Works with Codex, Claude Code, Cursor, WorkBuddy, and any agent that supports the SKILL.md format.
 
 > [!IMPORTANT]
 > This project is implemented by reverse-engineering the Kimi Slides skill, the PPTD format, and the frontend behavior and communication protocol of the publicly accessible web editor. It is not an official Kimi or Moonshot AI project and is not endorsed or supported by them. Public frontend resources and compatibility contracts used by this project may change without notice. Provided for learning and research purposes only.
@@ -60,11 +60,50 @@ Run `npx open-ppt@latest install -y` again to overwrite the local installation; 
 
 ## Usage
 
+### Workflows
+
+One skill selects a workflow from the request; no mandatory mode menu:
+
+| Mode | Example | Delivery |
+| --- | --- | --- |
+| 1: Create | “Create an English deck from this report” | Review `outline.md`, then generate the PPTD project and PPTX. |
+| 2: Translate | “Translate this Chinese PPTX into English, preserving its format” | Translate a copy of the original PPTX; no outline approval by default. |
+| 3: Restyle | “Normalize this PPTX to Mindray Red without changing its content” | Retain native objects, standardize branding and typography, and adjust page layouts. |
+
+Explicit creation / translation / Mode 3 requests are supported. An attached PPTX or the word English alone does not imply translation. A new Mindray-style deck remains creation; Mode 3 changes the design of an existing deck while retaining its content. The entrypoint loads only the relevant workflow; combined translation/redesign requests clarify preservation if needed.
+
+### Normalize a deck to Mindray Red
+
+```text
+Use open-ppt Mode 3 to restyle the attached PPTX into Mindray Red.
+Keep the content, slide count, order, and language. Unify headings, fonts,
+colors, footers, and the logo, adjusting each page's layout as needed.
+```
+
+The fixed system uses 16:9 pages, a red/white/gray/black palette, Segoe UI / Microsoft YaHei, and the bundled genuine logo, without embedded fonts by default. Photographs, medical imagery, and evidence screenshots retain their colors. No automatic rewriting, slide splitting/merging, or outline approval is added.
+
+The native helper `scripts/restyle_pptx.py` requires Python and `python-pptx` (`python -m pip install python-pptx`). The agent inspects source objects/media, prepares a per-page layout plan, and writes a separate editable PPTX and report. Tables, charts, notes, and hyperlinks are retained; complex objects, semantic colors, and inherited master content still need inspection. Automated styling/whole-content fitting is a starting point: final layout needs rendering, and outputs without a native renderer are explicitly marked as awaiting visual review.
+
+### Translate an existing PPTX
+
+```text
+Use open-ppt translation mode. Translate the attached Chinese PPTX into English,
+preserving its page count, order, and overall layout. Apply the attached glossary.
+```
+
+Page ranges such as slides 3–8 are supported. Normal quality analyzes terminology before translation; ask for quick translation or refined translation with review and polish. The language workflow is informed by [baoyu-translate](https://github.com/JimLiu/baoyu-skills/blob/main/skills/baoyu-translate/SKILL.md), adapted to slide text and layout constraints.
+
+The agent supplies translations to the bundled standard-library Python helper `scripts/translate_pptx.py`. It patches a new PPTX copy without a translation API or PPTD conversion, preserving unrelated package content and allowing explicit font-size adjustments. Text fit still needs visual review. Text in pictures, native charts, SmartArt, dynamic fields, and shared masters requires separate inspection; candidates are reported rather than claimed as translated. Input support is `.pptx`; convert legacy `.ppt` first.
+
 ### Generate a presentation with your agent
 
-Once installed, just describe what you need. By default you get both the complete, editable PPTD project directory and the matching PPTX file. PPTX generation is skipped only when you explicitly ask for PPTD-only output.
+Once installed, just describe what you need. New presentations first deliver `outline.md`: a page-by-page draft of topics, actual titles, complete body copy, and applicable visual suggestions, sources, and open questions. Review the page count and content, then explicitly approve the draft (for example, “The content looks good; create the PPT”). Only then does the agent produce the complete editable PPTD project and matching PPTX, retaining the Markdown draft.
+
+You can stop after receiving the draft, or explicitly ask to skip content review and produce the slides directly. An already approved page-by-page content draft does not need duplicate approval. Scoped edits and faithful replication of existing slides do not add this review stage by default. PPTX generation is skipped only when you explicitly ask for PPTD-only output.
 
 For more stable quality, put a style in the prompt (e.g. “dark product-launch look”) or attach a reference PPT template; topic-only prompts without style guidance tend to vary more.
+
+Default body fonts are common Windows fonts (Segoe UI / Microsoft YaHei), with no embedded fonts. This avoids copying roughly 4.87 MB of template-embedded MiSans data into each output. Fonts must still be installed on the recipient's device or substitutions may occur. To retain fonts already embedded in the base template, use `npx open-ppt compile <dir> --keep-template-fonts` (also supported by the Python compiler); this does not embed arbitrary custom fonts. Translation preserves the source's existing font setup without adding font data.
 
 ```text
 Use open-ppt to create a liquid-glass-style deck about the history of Apple.
@@ -134,10 +173,13 @@ macOS and Linux are unaffected.
 
 ## Features
 
+- Content review: new decks first deliver a page-by-page Markdown draft for approval.
+- PPTX translation: patch a copy of the original with consistent terminology, selected slide ranges, quality levels, optional font sizing, and a coverage/limitations report.
+- Mindray Red restyling: retain existing content/native objects, apply fixed brand styling, and keep the per-slide layout plan and verification report.
 - PPTD generation: let your agent generate complete, editable PPTD projects, from scratch, with style transfer, template reuse, or replication from images/PDFs.
 - Preset themes: ~30 official-style design systems you can name to apply; full list with previews in [theme_EN.md](theme_EN.md).
 - Element animations: off by default. Add `Require element entrance animations` to the prompt and the agent picks suitable on-slide effects per page.
-- PPTX generation: a matching PPTX is produced by default, with fonts embedded and fade page transitions written automatically (separate from on-slide element animations).
+- PPTX generation: a matching PPTX is produced by default without embedded fonts, with fade page transitions (separate from on-slide element animations). Existing template font embedding can be retained explicitly.
 - Visual QA: with a multimodal model, the skill exports every page as an image, stitches them into an overview sheet, and checks each page (distortion, occlusion, out-of-bounds elements, contrast, layout consistency, text overflow) before PPTX export, fixing and re-checking until every page passes.
 - Online editing: view and edit local PPTD projects in a browser, with autosave and configurable slide transitions.
 - Manual export: export PPTX manually from the editor at any time.
@@ -160,7 +202,7 @@ Most PPT skills fall into three buckets: assemble OOXML / pptxgenjs in code, ren
 Specifically:
 
 - PPTD describes theme, layout, and elements in YAML, which is more stable than raw OOXML / pptxgenjs and easier to edit locally than full-slide images.
-- You get both deliverables by default: an iterable PPTD project plus a ready-to-open PPTX with embedded fonts and fade page transitions.
+- Creation delivers an iterable PPTD project plus a PPTX with fade page transitions, without embedded fonts by default to reduce file size.
 - Add `Require element entrance animations` to the prompt and the agent chooses effects and timing for you.
 - Text boxes and shapes in the exported PPTX remain editable in PowerPoint / WPS, unlike image-only decks.
 - You can preview, tweak, set transitions, and re-export in the browser without rerunning the whole agent flow.
